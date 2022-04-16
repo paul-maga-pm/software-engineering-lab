@@ -2,6 +2,7 @@ rootProject.name = 'sales_agents'
 include 'DataAccess'
 include 'Business'
 include 'Domain'
+include 'Exceptions'
 include 'AdministratorGui'
 include 'AdministratorApplication'
 

@@ -1,10 +1,23 @@
 package com.salesagents.domain.models;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
-public class Employee extends Identifiable<Long>{
-    private String name;
+// Id of the employee is the username
+@Entity
+@Inheritance
+@Table(name="employees")
+@DiscriminatorColumn(name="type")
+public abstract class Employee{
+    @Id
+    @Column(name="username")
     private String username;
+
+    @Column(name="name")
+    private String name;
+
+    @Column(name="password")
     private String password;
 
     public Employee() {
@@ -26,13 +39,6 @@ public class Employee extends Identifiable<Long>{
         this.name = name;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getPassword() {
         return password;
@@ -42,19 +48,35 @@ public class Employee extends Identifiable<Long>{
         this.password = password;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Employee)) return false;
-        if (!super.equals(o)) return false;
         Employee employee = (Employee) o;
-        return Objects.equals(name, employee.name) &&
-                Objects.equals(username, employee.username) &&
+        return Objects.equals(username, employee.username) &&
+                Objects.equals(name, employee.name) &&
                 Objects.equals(password, employee.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, username, password);
+        return Objects.hash(username, name, password);
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "username='" + username + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
