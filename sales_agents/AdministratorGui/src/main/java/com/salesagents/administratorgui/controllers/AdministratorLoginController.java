@@ -1,5 +1,6 @@
 package com.salesagents.administratorgui.controllers;
 
+import com.salesagents.administratorgui.AdministratorGuiFxApplication;
 import com.salesagents.business.administrator.services.AdministratorLoginService;
 import com.salesagents.exceptions.ExceptionBaseClass;
 import javafx.event.ActionEvent;
@@ -27,7 +28,6 @@ public class AdministratorLoginController {
         this.loginService = loginService;
     }
 
-
     @FXML
     public PasswordField passwordField;
     @FXML
@@ -42,13 +42,8 @@ public class AdministratorLoginController {
             loginService.login(username, password);
             applicationPrimaryStage.setScene(administratorMainPageScene);
         } catch (ExceptionBaseClass exception) {
-            showExceptionMessageBox(exception);
+            AdministratorGuiFxApplication.showExceptionMessageBox(exception);
         }
-
     }
 
-    public void showExceptionMessageBox(ExceptionBaseClass exceptionBaseClass) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, exceptionBaseClass.getMessage(), ButtonType.CLOSE);
-        alert.showAndWait();
-    }
 }

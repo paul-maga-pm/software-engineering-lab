@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
-// Id of the employee is the username
 @Entity
 @Inheritance
 @Table(name="employees")

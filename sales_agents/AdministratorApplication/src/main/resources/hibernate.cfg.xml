@@ -12,6 +12,8 @@
 
         <mapping class="com.salesagents.domain.models.Employee"/>
         <mapping class="com.salesagents.domain.models.Administrator"/>
+        <mapping class="com.salesagents.domain.models.Agent"/>
+
 
     </session-factory>
 </hibernate-configuration>

@@ -3,10 +3,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity"
-            fx:controller="com.salesagents.administratorgui.controllers.AdministratorMainPageController"
-            maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.salesagents.administratorgui.controllers.AdministratorMainPageController">
    <left>
-      <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#handleClickOnLogoutButton" text="Logout" BorderPane.alignment="CENTER" />
+      <AnchorPane prefHeight="400.0" prefWidth="128.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="logoutButton" layoutX="14.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleClickOnLogoutButton" prefHeight="26.0" prefWidth="100.0" text="Logout" />
+            <Button fx:id="viewAgentsButton" layoutX="14.0" layoutY="153.0" mnemonicParsing="false" onAction="#handleClickOnViewAgentsButton" prefHeight="26.0" prefWidth="100.0" text="Agents" />
+         </children>
+      </AnchorPane>
    </left>
 </BorderPane>

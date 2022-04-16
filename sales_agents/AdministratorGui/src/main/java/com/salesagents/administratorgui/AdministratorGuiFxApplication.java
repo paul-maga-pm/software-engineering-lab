@@ -1,7 +1,10 @@
 package com.salesagents.administratorgui;
 
 import com.salesagents.administratorgui.controllers.AdministratorLoginController;
+import com.salesagents.administratorgui.controllers.AdministratorMainPageController;
+import com.salesagents.administratorgui.controllers.AgentsAdministrationController;
 import com.salesagents.business.administrator.services.AdministratorLoginService;
+import com.salesagents.business.administrator.services.impl.AgentsAdministrationServiceImpl;
 import com.salesagents.exceptions.ExceptionBaseClass;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,9 +15,14 @@ import javafx.stage.Stage;
 
 public class AdministratorGuiFxApplication extends Application {
     private static AdministratorLoginService loginService;
+    private static AgentsAdministrationServiceImpl agentAdministrationService;
 
     public static void setLoginService(AdministratorLoginService loginService) {
         AdministratorGuiFxApplication.loginService = loginService;
+    }
+
+    public static void setAgentsAdministrationService(AgentsAdministrationServiceImpl agentAdministrationService) {
+        AdministratorGuiFxApplication.agentAdministrationService = agentAdministrationService;
     }
 
     @Override
@@ -25,10 +33,26 @@ public class AdministratorGuiFxApplication extends Application {
         FXMLLoader mainPageLoader = new FXMLLoader(AdministratorGuiFxApplication.class.getResource("administrator-main-page-view.fxml"));
         Scene mainPageScene = new Scene(mainPageLoader.load());
 
+        FXMLLoader agentsViewLoader = new FXMLLoader(AdministratorGuiFxApplication.class.getResource("agents-view.fxml"));
+        Scene agentsViewScene = new Scene(agentsViewLoader.load());
+
+
         AdministratorLoginController loginController = loginLoader.getController();
         loginController.setApplicationPrimaryStage(primaryStage);
         loginController.setAdministratorMainPageScene(mainPageScene);
         loginController.setLoginService(loginService);
+
+        AgentsAdministrationController agentsAdministrationController = agentsViewLoader.getController();
+        agentsAdministrationController.setAgentsAdministrationService(agentAdministrationService);
+
+        AdministratorMainPageController mainPageController = mainPageLoader.getController();
+        mainPageController.setLoginScene(loginScene);
+        mainPageController.setMainPageScene(mainPageScene);
+        mainPageController.setAgentsViewScene(agentsViewScene);
+        mainPageController.setPrimaryStage(primaryStage);
+        mainPageController.setLoginService(loginService);
+
+        mainPageController.setAgentsAdministrationController(agentsAdministrationController);
 
 
         primaryStage.setScene(loginScene);

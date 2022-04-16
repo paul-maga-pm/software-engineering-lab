@@ -3,11 +3,14 @@ package com.salesagents.dataaccess.repository.hibernate;
 import com.salesagents.dataaccess.repository.EmployeeRepository;
 import com.salesagents.dataaccess.repository.exceptions.DatabaseException;
 import com.salesagents.dataaccess.repository.security.HashAlgorithm;
+import com.salesagents.domain.models.Agent;
 import com.salesagents.domain.models.Employee;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+
+import java.util.Collection;
 
 
 public class EmployeeDatabaseRepository implements EmployeeRepository {
@@ -61,6 +64,16 @@ public class EmployeeDatabaseRepository implements EmployeeRepository {
             var foundEmployee = result.get(0);
             foundEmployee.setPassword(password);
             return foundEmployee;
+        } catch (HibernateException exception) {
+            throw new DatabaseException(exception);
+        }
+    }
+
+    @Override
+    public Collection<Agent> getAllAgents() {
+        try(Session session = sessionFactory.openSession()) {
+            var query = session.createQuery("FROM Agent", Agent.class);
+            return query.getResultList();
         } catch (HibernateException exception) {
             throw new DatabaseException(exception);
         }
