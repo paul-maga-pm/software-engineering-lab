@@ -8,5 +8,6 @@ import java.util.Collection;
 public interface EmployeeRepository {
     void save(Employee employee);
     Employee findByUsernameAndPassword(String username, String password);
+    Employee findByUsername(String username);
     Collection<Agent> getAllAgents();
 }

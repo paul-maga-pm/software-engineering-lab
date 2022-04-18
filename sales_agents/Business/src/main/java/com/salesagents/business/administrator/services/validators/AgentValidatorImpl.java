@@ -29,7 +29,7 @@ public class AgentValidatorImpl implements AgentValidator{
         if (!errors.equals(""))
             throw new InvalidAgentException(errors);
 
-        if (employeeRepository.findByUsernameAndPassword(username, password) != null)
+        if (employeeRepository.findByUsername(username) != null)
             throw new InvalidAgentException(username + " is already used");
     }
 }

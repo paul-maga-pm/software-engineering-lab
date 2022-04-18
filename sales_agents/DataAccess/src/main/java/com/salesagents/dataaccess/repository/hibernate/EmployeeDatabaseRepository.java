@@ -21,6 +21,10 @@ public class EmployeeDatabaseRepository implements EmployeeRepository {
             "FROM Employee " +
             "WHERE username=:usernameParam and password=:passwordParam";
 
+    private static final String FIND_BY_USERNAME_HQL =
+            "FROM Employee " +
+            "WHERE username=:usernameParam";
+
 
     public EmployeeDatabaseRepository(SessionFactory factory, HashAlgorithm hashAlgorithm) {
         this.sessionFactory = factory;
@@ -67,6 +71,24 @@ public class EmployeeDatabaseRepository implements EmployeeRepository {
         } catch (HibernateException exception) {
             throw new DatabaseException(exception);
         }
+    }
+
+    @Override
+    public Employee findByUsername(String username) {
+        try(Session session = sessionFactory.openSession()) {
+            var query = session.createQuery(FIND_BY_USERNAME_HQL, Employee.class);
+            query.setParameter("usernameParam", username);
+            var result = query.getResultList();
+
+            if (result.size() == 0)
+                return null;
+            var foundEmployee = result.get(0);
+            foundEmployee.setPassword("");
+            return foundEmployee;
+        } catch (HibernateException exception) {
+            throw new DatabaseException(exception);
+        }
+
     }
 
     @Override

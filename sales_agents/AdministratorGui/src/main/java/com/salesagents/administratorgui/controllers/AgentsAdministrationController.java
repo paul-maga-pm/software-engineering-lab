@@ -2,7 +2,6 @@ package com.salesagents.administratorgui.controllers;
 
 import com.salesagents.administratorgui.AdministratorGuiFxApplication;
 import com.salesagents.business.administrator.services.AgentsAdministrationService;
-import com.salesagents.business.administrator.services.impl.AgentsAdministrationServiceImpl;
 import com.salesagents.domain.models.Agent;
 import com.salesagents.exceptions.ExceptionBaseClass;
 import javafx.beans.property.ReadOnlyObjectWrapper;

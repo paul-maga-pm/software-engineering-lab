@@ -11,10 +11,7 @@ public class AgentsAdministrationServiceImpl implements AgentsAdministrationServ
     private EmployeeRepository employeeRepository;
     private AgentValidator agentValidator;
 
-    public AgentsAdministrationServiceImpl(EmployeeRepository employeeRepository, AgentValidator agentValidator) {
-        this.employeeRepository = employeeRepository;
-        this.agentValidator = agentValidator;
-    }
+
 
     @Override
     public void addAgent(String name, String username, String password) {
