@@ -2,7 +2,9 @@ package com.salesagents.business.administrator.services.impl;
 
 import com.salesagents.business.administrator.services.AgentsAdministrationService;
 import com.salesagents.business.administrator.services.validators.AgentValidator;
+import com.salesagents.business.administrator.services.validators.AgentValidatorImpl;
 import com.salesagents.dataaccess.repository.EmployeeRepository;
+import com.salesagents.dataaccess.repository.hibernate.EmployeeDatabaseRepository;
 import com.salesagents.domain.models.Agent;
 
 import java.util.Collection;
@@ -11,6 +13,11 @@ public class AgentsAdministrationServiceImpl implements AgentsAdministrationServ
     private EmployeeRepository employeeRepository;
     private AgentValidator agentValidator;
 
+    public AgentsAdministrationServiceImpl(EmployeeDatabaseRepository employeeRepository,
+                                           AgentValidatorImpl agentValidator) {
+        this.employeeRepository = employeeRepository;
+        this.agentValidator = agentValidator;
+    }
 
 
     @Override
