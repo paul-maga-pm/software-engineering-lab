@@ -21,8 +21,7 @@ public class AgentsAdministrationServiceImpl implements AgentsAdministrationServ
 
 
     @Override
-    public void addAgent(String name, String username, String password) {
-        Agent agent = new Agent(name, username, password);
+    public void addAgent(Agent agent) {
         agentValidator.validate(agent);
         employeeRepository.save(agent);
     }

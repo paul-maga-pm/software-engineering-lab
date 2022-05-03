@@ -7,8 +7,9 @@
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="128.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="logoutButton" layoutX="14.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleClickOnLogoutButton" prefHeight="26.0" prefWidth="100.0" text="Logout" />
+            <Button fx:id="logoutButton" layoutX="14.0" layoutY="250.0" mnemonicParsing="false" onAction="#handleClickOnLogoutButton" prefHeight="26.0" prefWidth="100.0" text="Logout" />
             <Button fx:id="viewAgentsButton" layoutX="14.0" layoutY="153.0" mnemonicParsing="false" onAction="#handleClickOnViewAgentsButton" prefHeight="26.0" prefWidth="100.0" text="Agents" />
+            <Button fx:id="viewCatalogButton" layoutX="14.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleClickOnViewCatalogButton" prefHeight="26.0" prefWidth="100.0" text="Catalog" />
          </children>
       </AnchorPane>
    </left>

@@ -1,6 +1,6 @@
 package com.salesagents.business.administrator.services.validators;
 
-import com.salesagents.business.administrator.services.exceptions.InvalidAgentException;
+import com.salesagents.business.administrator.services.exceptions.InvalidEntityException;
 import com.salesagents.dataaccess.repository.EmployeeRepository;
 import com.salesagents.domain.models.Agent;
 
@@ -27,9 +27,9 @@ public class AgentValidatorImpl implements AgentValidator{
             errors += "Password can't be empty\n";
 
         if (!errors.equals(""))
-            throw new InvalidAgentException(errors);
+            throw new InvalidEntityException(errors);
 
         if (employeeRepository.findByUsername(username) != null)
-            throw new InvalidAgentException(username + " is already used");
+            throw new InvalidEntityException(username + " is already used");
     }
 }

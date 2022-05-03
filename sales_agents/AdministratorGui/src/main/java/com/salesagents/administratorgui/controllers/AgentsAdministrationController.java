@@ -66,8 +66,9 @@ public class AgentsAdministrationController {
         String password = agentPasswordTextField.getText().strip();
 
         try {
-            agentAdministrationService.addAgent(name, username, password);
-            agentObservableList.add(new Agent(name, username, password));
+            Agent agent = new Agent(name, username, password);
+            agentAdministrationService.addAgent(agent);
+            agentObservableList.add(agent);
         } catch (ExceptionBaseClass exception) {
             AdministratorGuiFxApplication.showExceptionMessageBox(exception);
         }

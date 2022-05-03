@@ -3,7 +3,10 @@ package com.salesagents.administratorgui;
 import com.salesagents.administratorgui.controllers.AdministratorLoginController;
 import com.salesagents.administratorgui.controllers.AdministratorMainPageController;
 import com.salesagents.administratorgui.controllers.AgentsAdministrationController;
+import com.salesagents.administratorgui.controllers.CatalogAdministrationController;
 import com.salesagents.business.administrator.services.AdministratorLoginService;
+import com.salesagents.business.administrator.services.AgentsAdministrationService;
+import com.salesagents.business.administrator.services.CatalogAdministrationService;
 import com.salesagents.business.administrator.services.impl.AgentsAdministrationServiceImpl;
 import com.salesagents.exceptions.ExceptionBaseClass;
 import javafx.application.Application;
@@ -15,14 +18,19 @@ import javafx.stage.Stage;
 
 public class AdministratorGuiFxApplication extends Application {
     private static AdministratorLoginService loginService;
-    private static AgentsAdministrationServiceImpl agentAdministrationService;
+    private static AgentsAdministrationService agentAdministrationService;
+    private static CatalogAdministrationService catalogAdministrationService;
 
     public static void setLoginService(AdministratorLoginService loginService) {
         AdministratorGuiFxApplication.loginService = loginService;
     }
 
-    public static void setAgentsAdministrationService(AgentsAdministrationServiceImpl agentAdministrationService) {
+    public static void setAgentsAdministrationService(AgentsAdministrationService agentAdministrationService) {
         AdministratorGuiFxApplication.agentAdministrationService = agentAdministrationService;
+    }
+
+    public static void setCatalogAdministrationService(CatalogAdministrationService catalogAdministrationService) {
+        AdministratorGuiFxApplication.catalogAdministrationService = catalogAdministrationService;
     }
 
     @Override
@@ -37,6 +45,9 @@ public class AdministratorGuiFxApplication extends Application {
         Scene agentsViewScene = new Scene(agentsViewLoader.load());
 
 
+        FXMLLoader catalogViewLoader = new FXMLLoader(AdministratorGuiFxApplication.class.getResource("catalog-view.fxml"));
+        Scene catalogViewScene = new Scene(catalogViewLoader.load());
+
         AdministratorLoginController loginController = loginLoader.getController();
         loginController.setApplicationPrimaryStage(primaryStage);
         loginController.setAdministratorMainPageScene(mainPageScene);
@@ -45,15 +56,20 @@ public class AdministratorGuiFxApplication extends Application {
         AgentsAdministrationController agentsAdministrationController = agentsViewLoader.getController();
         agentsAdministrationController.setAgentsAdministrationService(agentAdministrationService);
 
+        CatalogAdministrationController catalogController = catalogViewLoader.getController();
+        catalogController.setCatalogAdministrationService(catalogAdministrationService);
+
         AdministratorMainPageController mainPageController = mainPageLoader.getController();
         mainPageController.setLoginScene(loginScene);
         mainPageController.setMainPageScene(mainPageScene);
         mainPageController.setAgentsViewScene(agentsViewScene);
+        mainPageController.setCatalogViewScene(catalogViewScene);
+
         mainPageController.setPrimaryStage(primaryStage);
         mainPageController.setLoginService(loginService);
 
         mainPageController.setAgentsAdministrationController(agentsAdministrationController);
-
+        mainPageController.setCatalogController(catalogController);
 
         primaryStage.setScene(loginScene);
         primaryStage.show();

@@ -19,6 +19,12 @@ public class AdministratorMainPageController {
 
     private AdministratorLoginService loginService;
     private AgentsAdministrationController agentsAdministrationController;
+    private CatalogAdministrationController catalogController;
+    private Scene catalogViewScene;
+
+    public void setCatalogController(CatalogAdministrationController catalogController) {
+        this.catalogController = catalogController;
+    }
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -56,5 +62,15 @@ public class AdministratorMainPageController {
 
     public void setAgentsAdministrationController(AgentsAdministrationController agentsAdministrationController) {
         this.agentsAdministrationController = agentsAdministrationController;
+    }
+
+    public void handleClickOnViewCatalogButton(ActionEvent event) {
+        catalogController.loadProductsToView();
+        BorderPane root = (BorderPane) mainPageScene.getRoot();
+        root.setCenter(catalogViewScene.getRoot());
+    }
+
+    public void setCatalogViewScene(Scene catalogViewScene) {
+        this.catalogViewScene = catalogViewScene;
     }
 }
