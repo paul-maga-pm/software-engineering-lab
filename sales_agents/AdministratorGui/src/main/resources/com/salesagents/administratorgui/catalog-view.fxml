@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="433.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.salesagents.administratorgui.controllers.CatalogAdministrationController">
+<AnchorPane prefHeight="532.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.salesagents.administratorgui.controllers.CatalogAdministrationController">
    <children>
       <TableView fx:id="productTableView" prefHeight="214.0" prefWidth="428.0">
         <columns>
@@ -15,5 +15,28 @@
             <TableColumn fx:id="quantityTableColumn" prefWidth="68.199951171875" text="Quantity" />
         </columns>
       </TableView>
+      <Label layoutX="180.0" layoutY="331.0" text="Add product" />
+      <TextField fx:id="idField" layoutX="163.0" layoutY="349.0" />
+      <TextField fx:id="nameField" layoutX="163.0" layoutY="381.0" />
+      <TextField fx:id="typeField" layoutX="163.0" layoutY="407.0" />
+      <TextField fx:id="manufacturerField" layoutX="163.0" layoutY="433.0" />
+      <TextField fx:id="priceField" layoutX="163.0" layoutY="459.0" />
+      <TextField fx:id="quantityField" layoutX="163.0" layoutY="485.0" />
+      <Label layoutX="140.0" layoutY="352.0" prefHeight="18.0" prefWidth="16.0" text="Id" />
+      <Label layoutX="119.0" layoutY="385.0" text="Name" />
+      <Label layoutX="122.0" layoutY="411.0" text="Type" />
+      <Label layoutX="83.0" layoutY="437.0" text="Manufacturer" />
+      <Label layoutX="122.0" layoutY="463.0" text="Price" />
+      <Label layoutX="78.0" layoutY="489.0" text="Initial quantity" />
+      <Button fx:id="saveButton" layoutX="325.0" layoutY="424.0" mnemonicParsing="false" onAction="#handleClickOnSaveButton" text="Save" />
+      <Label layoutX="81.0" layoutY="279.0" text="Update price" />
+      <Label layoutX="73.0" layoutY="305.0" text="Update quantity" />
+      <TextField fx:id="priceUpdateField" layoutX="163.0" layoutY="271.0" />
+      <TextField fx:id="updateQuantityField" layoutX="163.0" layoutY="301.0" />
+      <Button fx:id="updatePriceButton" layoutX="317.0" layoutY="271.0" mnemonicParsing="false" onAction="#handleClickOnUpdatePriceButton" text="Update price" />
+      <Button fx:id="deleteButton" layoutX="327.0" layoutY="234.0" mnemonicParsing="false" onAction="#handleClickOnDeleteButton" text="Delete" />
+      <TextField fx:id="selectedProductId" layoutX="163.0" layoutY="234.0" />
+      <Label layoutX="69.0" layoutY="238.0" text="Selected Product:" />
+      <Button fx:id="updateQuantityButton" layoutX="314.0" layoutY="301.0" mnemonicParsing="false" onAction="#handleClickOnUpdateQuantityButton" text="Update quantity" />
    </children>
 </AnchorPane>

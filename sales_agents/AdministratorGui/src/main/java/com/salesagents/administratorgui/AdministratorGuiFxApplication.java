@@ -33,6 +33,11 @@ public class AdministratorGuiFxApplication extends Application {
         AdministratorGuiFxApplication.catalogAdministrationService = catalogAdministrationService;
     }
 
+    public static void showExceptionMessageBox(String exceptionMessage) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, exceptionMessage, ButtonType.CLOSE);
+        alert.showAndWait();
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loginLoader = new FXMLLoader(AdministratorGuiFxApplication.class.getResource("administrator-login-view.fxml"));
