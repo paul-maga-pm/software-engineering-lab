@@ -1,7 +1,6 @@
 plugins {
     id 'java'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.7'
 }
 
 group 'com.salesagents'
@@ -12,24 +11,14 @@ repositories {
 }
 
 application {
-    mainClass='com.salesagents.administratorapplication.AdministratorApplication'
+    mainClass='com.salesagents.serverapplication.ServerApplication'
 }
-
-
-javafx {
-    modules = ['javafx.controls', 'javafx.fxml']
-}
-
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-
     implementation project(':DataAccess')
     implementation project(':Domain')
     implementation project(':Business')
     implementation project(':AdministratorGui')
-
     implementation project(':Networking')
 
     implementation 'org.hibernate.orm:hibernate-core:6.0.0.Final'

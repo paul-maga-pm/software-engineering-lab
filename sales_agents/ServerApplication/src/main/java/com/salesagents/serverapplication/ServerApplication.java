@@ -1,6 +1,5 @@
-package com.salesagents.administratorapplication;
+package com.salesagents.serverapplication;
 
-import com.salesagents.administratorgui.AdministratorGuiFxApplication;
 import com.salesagents.business.administrator.services.impl.AdministratorLoginServiceImpl;
 import com.salesagents.business.administrator.services.impl.AgentsAdministrationServiceImpl;
 import com.salesagents.business.administrator.services.impl.CatalogAdministrationServiceImpl;
@@ -9,21 +8,16 @@ import com.salesagents.business.administrator.services.validators.ProductValidat
 import com.salesagents.dataaccess.repository.hibernate.EmployeeDatabaseRepository;
 import com.salesagents.dataaccess.repository.hibernate.ProductCatalogDatabaseRepository;
 import com.salesagents.dataaccess.repository.security.Sha512HashAlgorithm;
-import com.salesagents.networking.proxy.AdminLoginProxy;
-import com.salesagents.networking.proxy.RpcClientStream;
-import javafx.application.Application;
+import com.salesagents.networking.server.RpcServer;
 import org.hibernate.cfg.Configuration;
 
-public class AdministratorApplication {
+public class ServerApplication {
     public static void main(String[] args) {
         var sessionFactory = new Configuration().configure().buildSessionFactory();
         var passwordHashAlgorithm = new Sha512HashAlgorithm();
         var employeeRepository = new EmployeeDatabaseRepository(sessionFactory, passwordHashAlgorithm);
 
-//        var administratorLoginService = new AdministratorLoginServiceImpl(employeeRepository);
-
-        var clientStream = new RpcClientStream("127.0.0.1", 5555);
-        var administratorLoginService = new AdminLoginProxy(clientStream);
+        var administratorLoginService = new AdministratorLoginServiceImpl(employeeRepository);
 
         var agentValidator = new AgentValidatorImpl(employeeRepository);
         var agentAdministrationService = new AgentsAdministrationServiceImpl(employeeRepository, agentValidator);
@@ -32,10 +26,9 @@ public class AdministratorApplication {
         var productValidator = new ProductValidatorImpl();
         var catalogAdministrationService = new CatalogAdministrationServiceImpl(productValidator, catalogRepo);
 
-        AdministratorGuiFxApplication.setLoginService(administratorLoginService);
-        AdministratorGuiFxApplication.setAgentsAdministrationService(agentAdministrationService);
-        AdministratorGuiFxApplication.setCatalogAdministrationService(catalogAdministrationService);
+        RpcServer server = new RpcServer(5555);
+        server.setAdminLoginService(administratorLoginService);
 
-        Application.launch(AdministratorGuiFxApplication.class, args);
+        server.start();
     }
 }

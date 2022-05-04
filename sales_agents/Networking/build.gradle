@@ -1,0 +1,20 @@
+plugins {
+    id 'java-library'
+}
+
+group 'com.salesagents'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':Business')
+    implementation project(':Domain')
+    implementation project(':Exceptions')
+}
+
+test {
+    useJUnitPlatform()
+}

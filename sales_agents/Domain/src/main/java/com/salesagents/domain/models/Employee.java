@@ -2,13 +2,14 @@ package com.salesagents.domain.models;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Inheritance
 @Table(name="employees")
 @DiscriminatorColumn(name="type")
-public abstract class Employee{
+public abstract class Employee implements Serializable {
     @Id
     @Column(name="username")
     private String username;

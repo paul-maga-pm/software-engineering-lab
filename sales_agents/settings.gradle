@@ -7,4 +7,6 @@ include 'AdministratorGui'
 include 'AdministratorApplication'
 include 'AgentApplication'
 include 'AgentGui'
+include 'Networking'
+include 'ServerApplication'
 

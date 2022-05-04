@@ -3,6 +3,7 @@ package com.salesagents.agentgui.controllers;
 import com.salesagents.business.administrator.services.AdministratorLoginService;
 import com.salesagents.business.agent.services.AgentLoginService;
 import com.salesagents.business.agent.services.impl.AgentLoginServiceImpl;
+import com.salesagents.business.exceptions.LoginException;
 import com.salesagents.domain.models.Agent;
 import com.salesagents.exceptions.ExceptionBaseClass;
 import javafx.event.ActionEvent;
