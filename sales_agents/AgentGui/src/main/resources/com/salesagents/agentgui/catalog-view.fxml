@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="312.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.salesagents.agentgui.controllers.ViewCatalogController">
+   <children>
+      <TableView fx:id="productTableView" prefHeight="312.0" prefWidth="428.0">
+        <columns>
+          <TableColumn fx:id="idTableColumn" prefWidth="49.200013756752014" text="Id" />
+          <TableColumn fx:id="nameTableColumn" prefWidth="82.79998016357422" text="Name" />
+            <TableColumn fx:id="typeTableColumn" prefWidth="55.39996337890625" text="Type" />
+            <TableColumn fx:id="manufacturerTableColumn" prefWidth="116.5999755859375" text="Manufacturer" />
+            <TableColumn fx:id="priceTableColumn" prefWidth="56.199951171875" text="Price" />
+            <TableColumn fx:id="quantityTableColumn" prefWidth="68.199951171875" text="Quantity" />
+        </columns>
+      </TableView>
+  </children>
+</AnchorPane>
