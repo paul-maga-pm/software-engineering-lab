@@ -5,4 +5,6 @@ include 'Domain'
 include 'Exceptions'
 include 'AdministratorGui'
 include 'AdministratorApplication'
+include 'AgentApplication'
+include 'AgentGui'
 

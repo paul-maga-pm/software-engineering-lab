@@ -9,10 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.util.Collection;
 
@@ -70,7 +67,12 @@ public class AgentsAdministrationController {
             agentAdministrationService.addAgent(agent);
             agentObservableList.add(agent);
         } catch (ExceptionBaseClass exception) {
-            AdministratorGuiFxApplication.showExceptionMessageBox(exception);
+            showExceptionMessageBox(exception);
         }
+    }
+
+    private void showExceptionMessageBox(ExceptionBaseClass exception) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.CLOSE);
+        alert.showAndWait();
     }
 }

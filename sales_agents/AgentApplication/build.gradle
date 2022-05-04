@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.7'
+}
+
+
+group 'com.salesagents'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+
+application {
+    mainClass='com.salesagents.agentapplication.AgentApplication'
+}
+
+
+javafx {
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+
+dependencies {
+    implementation project(':DataAccess')
+    implementation project(':Domain')
+    implementation project(':Business')
+    implementation project(':AgentGui')
+
+    implementation 'org.hibernate.orm:hibernate-core:6.0.0.Final'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.3'
+}
+
+test {
+    useJUnitPlatform()
+}

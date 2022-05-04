@@ -7,13 +7,9 @@ import com.salesagents.administratorgui.controllers.CatalogAdministrationControl
 import com.salesagents.business.administrator.services.AdministratorLoginService;
 import com.salesagents.business.administrator.services.AgentsAdministrationService;
 import com.salesagents.business.administrator.services.CatalogAdministrationService;
-import com.salesagents.business.administrator.services.impl.AgentsAdministrationServiceImpl;
-import com.salesagents.exceptions.ExceptionBaseClass;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 public class AdministratorGuiFxApplication extends Application {
@@ -33,10 +29,6 @@ public class AdministratorGuiFxApplication extends Application {
         AdministratorGuiFxApplication.catalogAdministrationService = catalogAdministrationService;
     }
 
-    public static void showExceptionMessageBox(String exceptionMessage) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, exceptionMessage, ButtonType.CLOSE);
-        alert.showAndWait();
-    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -80,8 +72,4 @@ public class AdministratorGuiFxApplication extends Application {
         primaryStage.show();
     }
 
-    public static void showExceptionMessageBox(ExceptionBaseClass exceptionBaseClass) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, exceptionBaseClass.getMessage(), ButtonType.CLOSE);
-        alert.showAndWait();
-    }
 }

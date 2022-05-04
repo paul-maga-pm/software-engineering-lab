@@ -1,6 +1,6 @@
 package com.salesagents.business.administrator.services.validators;
 
-import com.salesagents.business.administrator.services.exceptions.InvalidEntityException;
+import com.salesagents.business.exceptions.InvalidEntityException;
 import com.salesagents.domain.models.Product;
 
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package com.salesagents.business.administrator.services.exceptions;
+package com.salesagents.business.exceptions;
 
 import com.salesagents.exceptions.ExceptionBaseClass;
 

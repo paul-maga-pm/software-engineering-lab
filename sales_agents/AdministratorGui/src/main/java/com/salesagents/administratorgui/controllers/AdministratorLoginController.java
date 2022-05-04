@@ -42,8 +42,13 @@ public class AdministratorLoginController {
             loginService.login(username, password);
             applicationPrimaryStage.setScene(administratorMainPageScene);
         } catch (ExceptionBaseClass exception) {
-            AdministratorGuiFxApplication.showExceptionMessageBox(exception);
+            showExceptionMessageBox(exception);
         }
+    }
+
+    private void showExceptionMessageBox(ExceptionBaseClass exception) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.CLOSE);
+        alert.showAndWait();
     }
 
 }
