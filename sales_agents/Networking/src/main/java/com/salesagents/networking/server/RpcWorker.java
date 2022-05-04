@@ -3,6 +3,7 @@ package com.salesagents.networking.server;
 import com.salesagents.business.administrator.services.AdministratorLoginService;
 import com.salesagents.business.administrator.services.AgentsAdministrationService;
 import com.salesagents.business.administrator.services.CatalogAdministrationService;
+import com.salesagents.business.agent.services.AgentLoginService;
 import com.salesagents.domain.models.Administrator;
 import com.salesagents.domain.models.Agent;
 import com.salesagents.domain.models.Product;
@@ -20,6 +21,7 @@ public class RpcWorker implements Runnable{
     private AgentsAdministrationService agentsAdministrationService;
     private boolean clientIsConnected;
     private CatalogAdministrationService catalogAdministrationService;
+    private AgentLoginService agentLoginService;
 
     public RpcWorker(RpcServerStream serverStream) {
         this.serverStream = serverStream;
@@ -46,7 +48,7 @@ public class RpcWorker implements Runnable{
                 if (request instanceof AdminRpcRequest)
                     response = handleAdminRequest((AdminRpcRequest) request);
                 else
-                    response = handleAgentRequest(request);
+                    response = handleAgentRequest((AgentRpcRequest) request);
 
                 serverStream.sendResponse(response);
             } catch (IOException e) {
@@ -64,8 +66,52 @@ public class RpcWorker implements Runnable{
         System.out.println("Client disconnected");
     }
 
-    private RpcResponse handleAgentRequest(RpcRequest request) {
-        return null;
+    private RpcResponse handleAgentRequest(AgentRpcRequest request) {
+        if (request.getType() == AgentRpcRequestType.LOGIN)
+            return handleAgentLoginRequest(request);
+
+        if (request.getType() == AgentRpcRequestType.LOGOUT)
+            return handleLogoutAgentRequest();
+
+        if (request.getType() == AgentRpcRequestType.GET_ALL_PRODUCTS)
+            return handleGetAllProductsRequest();
+
+        System.out.println("Invalid request");
+        return new RpcResponse
+                .ResponseBuilder()
+                .setType(RpcResponseType.ERROR)
+                .setData("Invalid request")
+                .build();
+    }
+
+    private RpcResponse handleLogoutAgentRequest() {
+        agentLoginService.logout();
+        clientIsConnected = false;
+        return new RpcResponse
+                .ResponseBuilder()
+                .setType(RpcResponseType.OK)
+                .build();
+    }
+
+    private RpcResponse handleAgentLoginRequest(AgentRpcRequest request) {
+        Map<String, String> authenticationInfo = (HashMap<String, String>) request.getData();
+        String username = authenticationInfo.get("username");
+        String password = authenticationInfo.get("password");
+
+        try {
+            Agent agent = agentLoginService.login(username, password);
+            return new RpcResponse
+                    .ResponseBuilder()
+                    .setType(RpcResponseType.OK)
+                    .setData(agent)
+                    .build();
+        } catch (ExceptionBaseClass exception) {
+            return new RpcResponse
+                    .ResponseBuilder()
+                    .setType(RpcResponseType.ERROR)
+                    .setData(exception.getMessage())
+                    .build();
+        }
     }
 
     private RpcResponse handleAdminRequest(AdminRpcRequest request) {
@@ -86,7 +132,7 @@ public class RpcWorker implements Runnable{
             return handleAddProductAdminRequest(request);
 
         if (request.getType() == AdminRpcRequestType.GET_ALL_PRODUCTS)
-            return handleGetAllProductsAdminRequest();
+            return handleGetAllProductsRequest();
 
         if (request.getType() == AdminRpcRequestType.UPDATE_PRODUCT)
             return handleUpdateProductAdminRequest(request);
@@ -138,7 +184,7 @@ public class RpcWorker implements Runnable{
         }
     }
 
-    private RpcResponse handleGetAllProductsAdminRequest() {
+    private RpcResponse handleGetAllProductsRequest() {
         try {
             Collection<Product> products = catalogAdministrationService.getAll();
             return new RpcResponse
@@ -235,5 +281,9 @@ public class RpcWorker implements Runnable{
 
     public void setCatalogAdministrationService(CatalogAdministrationService catalogAdministrationService) {
         this.catalogAdministrationService = catalogAdministrationService;
+    }
+
+    public void setAgentLoginService(AgentLoginService agentLoginService) {
+        this.agentLoginService = agentLoginService;
     }
 }

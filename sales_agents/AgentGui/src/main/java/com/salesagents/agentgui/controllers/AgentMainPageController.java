@@ -44,6 +44,7 @@ public class AgentMainPageController {
         loginService.logout();
         applicationPrimaryStage.setScene(loginScene);
         loggedAgent = null;
+        catalogController.clearProductsFromTableView();
     }
 
     public void setViewCatalogScene(Scene catalogScene) {

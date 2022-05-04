@@ -43,6 +43,10 @@ public class ViewCatalogController {
         quantityTableColumn.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().getQuantityInStock()));
     }
 
+    public void clearProductsFromTableView() {
+        productObservableList = null;
+    }
+
     public void loadProductsToView() {
         if (productObservableList == null) {
             productObservableList = FXCollections.observableArrayList();

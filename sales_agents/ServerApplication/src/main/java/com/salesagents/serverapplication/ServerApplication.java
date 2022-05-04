@@ -5,6 +5,9 @@ import com.salesagents.business.administrator.services.impl.AgentsAdministration
 import com.salesagents.business.administrator.services.impl.CatalogAdministrationServiceImpl;
 import com.salesagents.business.administrator.services.validators.AgentValidatorImpl;
 import com.salesagents.business.administrator.services.validators.ProductValidatorImpl;
+import com.salesagents.business.agent.services.AgentLoginService;
+import com.salesagents.business.agent.services.impl.AgentLoginServiceImpl;
+import com.salesagents.business.agent.services.impl.ViewCatalogServiceImpl;
 import com.salesagents.dataaccess.repository.hibernate.EmployeeDatabaseRepository;
 import com.salesagents.dataaccess.repository.hibernate.ProductCatalogDatabaseRepository;
 import com.salesagents.dataaccess.repository.security.Sha512HashAlgorithm;
@@ -26,10 +29,16 @@ public class ServerApplication {
         var productValidator = new ProductValidatorImpl();
         var catalogAdministrationService = new CatalogAdministrationServiceImpl(productValidator, catalogRepo);
 
+
+        AgentLoginService agentLoginService = new AgentLoginServiceImpl(employeeRepository);
+
         RpcServer server = new RpcServer(5555);
         server.setAdminLoginService(administratorLoginService);
         server.setAgentsAdministrationService(agentAdministrationService);
         server.setCatalogAdministrationService(catalogAdministrationService);
+
+        server.setAgentLoginService(agentLoginService);
+
         server.start();
     }
 }

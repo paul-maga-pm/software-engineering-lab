@@ -29,6 +29,8 @@ dependencies {
     implementation project(':Business')
     implementation project(':AgentGui')
 
+    implementation project(':Networking')
+
     implementation 'org.hibernate.orm:hibernate-core:6.0.0.Final'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.3'
 }
