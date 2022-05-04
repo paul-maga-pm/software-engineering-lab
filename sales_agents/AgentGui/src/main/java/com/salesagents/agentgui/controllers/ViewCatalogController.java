@@ -1,9 +1,11 @@
 package com.salesagents.agentgui.controllers;
 
 import com.salesagents.business.agent.services.ViewCatalogService;
+import com.salesagents.business.utils.ProductObserver;
 import com.salesagents.domain.models.Agent;
 import com.salesagents.domain.models.Product;
 import com.salesagents.exceptions.ExceptionBaseClass;
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,7 +17,7 @@ import javafx.scene.control.TableView;
 
 import java.util.Collection;
 
-public class ViewCatalogController {
+public class ViewCatalogController implements ProductObserver {
     public TableView<Product> productTableView;
     public TableColumn<Product, String> idTableColumn;
     public TableColumn<Product, String> nameTableColumn;
@@ -45,6 +47,7 @@ public class ViewCatalogController {
 
     public void clearProductsFromTableView() {
         productObservableList = null;
+        productTableView.setItems(FXCollections.observableArrayList());
     }
 
     public void loadProductsToView() {
@@ -67,5 +70,34 @@ public class ViewCatalogController {
 
     public void setLoggedAgent(Agent loggedAgent) {
         this.loggedAgent = loggedAgent;
+    }
+
+    @Override
+    public void productWasAdded(Product newProduct) {
+        Platform.runLater(() -> {
+            productObservableList.add(newProduct);
+        });
+    }
+
+    @Override
+    public void productWasUpdated(Product newValueOfProduct) {
+        Platform.runLater(() -> {
+            for(int i = 0; i < productObservableList.size(); i++) {
+                String crtId = productObservableList.get(i).getId();
+                if (newValueOfProduct.getId().equals(crtId)) {
+                    productObservableList.set(i, newValueOfProduct);
+                    break;
+                }
+            }
+            productTableView.refresh();
+        });
+    }
+
+    @Override
+    public void productWasRemoved(String idOfRemovedProduct) {
+        Platform.runLater(() -> {
+            productObservableList.removeIf(p -> p.getId().equals(idOfRemovedProduct));
+            productTableView.refresh();
+        });
     }
 }

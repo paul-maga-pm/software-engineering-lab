@@ -60,6 +60,11 @@ public class CatalogAdministrationController {
         }
     }
 
+    public void clearProductsFromView() {
+        productObservableList = null;
+        productTableView.setItems(FXCollections.observableArrayList());
+    }
+
     @FXML
     void initialize() {
         idTableColumn.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().getId()));

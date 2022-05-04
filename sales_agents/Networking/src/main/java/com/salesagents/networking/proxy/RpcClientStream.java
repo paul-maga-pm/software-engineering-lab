@@ -1,8 +1,11 @@
 package com.salesagents.networking.proxy;
 
+import com.salesagents.business.utils.ProductObservable;
+import com.salesagents.domain.models.Product;
 import com.salesagents.exceptions.ExceptionBaseClass;
 import com.salesagents.networking.protocols.RpcRequest;
 import com.salesagents.networking.protocols.RpcResponse;
+import com.salesagents.networking.protocols.RpcResponseType;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -11,7 +14,7 @@ import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class RpcClientStream {
+public class RpcClientStream extends ProductObservable {
     private int port;
     private String host;
 
@@ -50,6 +53,7 @@ public class RpcClientStream {
         try {
             clientSocket.close();
             serverResponseStream.close();
+            clientRequestStream.flush();
             clientRequestStream.close();
             isConnected = false;
         } catch (IOException e) {
@@ -60,7 +64,7 @@ public class RpcClientStream {
     public void sendRequest(RpcRequest request) {
         try {
             clientRequestStream.writeObject(request);
-            clientRequestStream.flush();
+            clientRequestStream.reset();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -99,6 +103,11 @@ public class RpcClientStream {
     }
 
     private void handleUpdateNotification(RpcResponse response) {
-
+        if (response.getType() == RpcResponseType.PRODUCT_WAS_ADDED)
+            notifyThatProductWasAdded((Product) response.getData());
+        else if (response.getType() == RpcResponseType.PRODUCT_WAS_REMOVED)
+            notifyThatProductWasRemoved(response.getData().toString());
+        else if (response.getType() == RpcResponseType.PRODUCT_WAS_UPDATED)
+            notifyThatProductWasUpdated((Product) response.getData());
     }
 }

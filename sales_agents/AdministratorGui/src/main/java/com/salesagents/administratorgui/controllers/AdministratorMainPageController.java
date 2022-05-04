@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -52,6 +53,9 @@ public class AdministratorMainPageController {
     public void handleClickOnLogoutButton(ActionEvent event) {
         loginService.logout();
         primaryStage.setScene(loginScene);
+        BorderPane root = (BorderPane) mainPageScene.getRoot();
+        root.setCenter(new AnchorPane());
+        catalogController.clearProductsFromView();
     }
 
     public void handleClickOnViewAgentsButton(ActionEvent event) {

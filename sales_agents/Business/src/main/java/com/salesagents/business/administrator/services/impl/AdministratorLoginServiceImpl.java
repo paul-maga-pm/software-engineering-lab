@@ -21,6 +21,8 @@ public class AdministratorLoginServiceImpl implements AdministratorLoginService 
         Employee employee = employeeRepository.findByUsernameAndPassword(username, password);
         Administrator administrator = null;
 
+        if (employee == null)
+            throw new LoginException("Invalid username or password");
 
         try {
             administrator = (Administrator) employee;

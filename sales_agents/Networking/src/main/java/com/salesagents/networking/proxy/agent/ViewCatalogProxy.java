@@ -1,6 +1,8 @@
 package com.salesagents.networking.proxy.agent;
 
 import com.salesagents.business.agent.services.ViewCatalogService;
+import com.salesagents.business.utils.ProductObservable;
+import com.salesagents.business.utils.ProductObserver;
 import com.salesagents.domain.models.Product;
 import com.salesagents.exceptions.ExceptionBaseClass;
 import com.salesagents.networking.protocols.AgentRpcRequest;
@@ -11,7 +13,7 @@ import com.salesagents.networking.proxy.RpcClientStream;
 
 import java.util.Collection;
 
-public class ViewCatalogProxy implements ViewCatalogService {
+public class ViewCatalogProxy  extends ViewCatalogService {
     private RpcClientStream clientStream;
 
     public ViewCatalogProxy(RpcClientStream clientStream) {
@@ -34,5 +36,15 @@ public class ViewCatalogProxy implements ViewCatalogService {
                 return (Collection<Product>) response.getData();
         }
         throw new ExceptionBaseClass("Invalid response from server");
+    }
+
+    @Override
+    public synchronized void addObserver(ProductObserver observer) {
+        clientStream.addObserver(observer);
+    }
+
+    @Override
+    public synchronized void removeObserver(ProductObserver observer) {
+        clientStream.removeObserver(observer);
     }
 }

@@ -4,6 +4,7 @@ import com.salesagents.business.administrator.services.AdministratorLoginService
 import com.salesagents.business.administrator.services.AgentsAdministrationService;
 import com.salesagents.business.administrator.services.CatalogAdministrationService;
 import com.salesagents.business.agent.services.AgentLoginService;
+import com.salesagents.business.utils.ProductObserver;
 import com.salesagents.domain.models.Administrator;
 import com.salesagents.domain.models.Agent;
 import com.salesagents.domain.models.Product;
@@ -15,7 +16,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RpcWorker implements Runnable{
+public class RpcWorker implements Runnable, ProductObserver {
     private RpcServerStream serverStream;
     private AdministratorLoginService adminLoginService;
     private AgentsAdministrationService agentsAdministrationService;
@@ -51,6 +52,12 @@ public class RpcWorker implements Runnable{
                     response = handleAgentRequest((AgentRpcRequest) request);
 
                 serverStream.sendResponse(response);
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
@@ -87,6 +94,7 @@ public class RpcWorker implements Runnable{
     private RpcResponse handleLogoutAgentRequest() {
         agentLoginService.logout();
         clientIsConnected = false;
+        catalogAdministrationService.removeObserver(this);
         return new RpcResponse
                 .ResponseBuilder()
                 .setType(RpcResponseType.OK)
@@ -100,6 +108,7 @@ public class RpcWorker implements Runnable{
 
         try {
             Agent agent = agentLoginService.login(username, password);
+            catalogAdministrationService.addObserver(this);
             return new RpcResponse
                     .ResponseBuilder()
                     .setType(RpcResponseType.OK)
@@ -285,5 +294,50 @@ public class RpcWorker implements Runnable{
 
     public void setAgentLoginService(AgentLoginService agentLoginService) {
         this.agentLoginService = agentLoginService;
+    }
+
+    @Override
+    public void productWasAdded(Product newProduct) {
+        RpcResponse notification = new RpcResponse
+                .ResponseBuilder()
+                .setData(newProduct)
+                .setType(RpcResponseType.PRODUCT_WAS_ADDED)
+                .build();
+
+        try {
+            serverStream.sendResponse(notification);
+        } catch (IOException e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    @Override
+    public void productWasUpdated(Product newValueOfProduct) {
+        RpcResponse notification = new RpcResponse
+                .ResponseBuilder()
+                .setData(newValueOfProduct)
+                .setType(RpcResponseType.PRODUCT_WAS_UPDATED)
+                .build();
+
+        try {
+            serverStream.sendResponse(notification);
+        } catch (IOException exception) {
+            System.out.println(exception.toString());
+        }
+    }
+
+    @Override
+    public void productWasRemoved(String idOfRemovedProduct) {
+        RpcResponse notification = new RpcResponse
+                .ResponseBuilder()
+                .setType(RpcResponseType.PRODUCT_WAS_REMOVED)
+                .setData(idOfRemovedProduct)
+                .build();
+
+        try {
+            serverStream.sendResponse(notification);
+        } catch (IOException exception) {
+            System.out.println(exception.toString());
+        }
     }
 }

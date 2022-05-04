@@ -16,6 +16,10 @@ public class AgentLoginServiceImpl implements AgentLoginService {
     @Override
     public Agent login(String username, String password) {
         Employee employee = employeeRepository.findByUsernameAndPassword(username, password);
+
+        if (employee == null)
+            throw new LoginException("Invalid username or password");
+
         Agent agent = null;
 
         try {

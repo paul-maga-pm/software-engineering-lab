@@ -19,7 +19,9 @@ public class RpcResponse implements Serializable {
     }
 
     public boolean isUpdateNotification() {
-        return false;
+        return type == RpcResponseType.PRODUCT_WAS_ADDED ||
+                type == RpcResponseType.PRODUCT_WAS_REMOVED ||
+                type == RpcResponseType.PRODUCT_WAS_UPDATED;
     }
 
     public static class ResponseBuilder {

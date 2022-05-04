@@ -1,10 +1,12 @@
 package com.salesagents.agentgui.controllers;
 
 import com.salesagents.business.agent.services.AgentLoginService;
+import com.salesagents.business.agent.services.ViewCatalogService;
 import com.salesagents.domain.models.Agent;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -17,6 +19,7 @@ public class AgentMainPageController {
     private AgentLoginService loginService;
     private Agent loggedAgent;
     private ViewCatalogController catalogController;
+    private ViewCatalogService viewCatalogService;
 
     public void setLoginService(AgentLoginService loginService) {
         this.loginService = loginService;
@@ -45,6 +48,9 @@ public class AgentMainPageController {
         applicationPrimaryStage.setScene(loginScene);
         loggedAgent = null;
         catalogController.clearProductsFromTableView();
+        viewCatalogService.removeObserver(catalogController);
+        BorderPane root = (BorderPane) mainPageScene.getRoot();
+        root.setCenter(new AnchorPane());
     }
 
     public void setViewCatalogScene(Scene catalogScene) {
@@ -60,5 +66,9 @@ public class AgentMainPageController {
 
     public void setViewCatalogController(ViewCatalogController viewCatalogController) {
         this.catalogController = viewCatalogController;
+    }
+
+    public void setViewCatalogService(ViewCatalogService viewCatalogService) {
+        this.viewCatalogService = viewCatalogService;
     }
 }

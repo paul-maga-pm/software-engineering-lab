@@ -6,7 +6,7 @@ import com.salesagents.domain.models.Product;
 
 import java.util.Collection;
 
-public class ViewCatalogServiceImpl implements ViewCatalogService {
+public class ViewCatalogServiceImpl extends ViewCatalogService {
     private ProductCatalogRepository productCatalogRepository;
 
     public ViewCatalogServiceImpl(ProductCatalogRepository productCatalogRepository) {

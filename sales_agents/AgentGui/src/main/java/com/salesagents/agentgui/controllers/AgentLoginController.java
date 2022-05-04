@@ -1,9 +1,7 @@
 package com.salesagents.agentgui.controllers;
 
-import com.salesagents.business.administrator.services.AdministratorLoginService;
 import com.salesagents.business.agent.services.AgentLoginService;
-import com.salesagents.business.agent.services.impl.AgentLoginServiceImpl;
-import com.salesagents.business.exceptions.LoginException;
+import com.salesagents.business.agent.services.ViewCatalogService;
 import com.salesagents.domain.models.Agent;
 import com.salesagents.exceptions.ExceptionBaseClass;
 import javafx.event.ActionEvent;
@@ -17,6 +15,9 @@ public class AgentLoginController {
     public Button loginButton;
 
     private AgentMainPageController mainPageController;
+    private ViewCatalogController viewCatalogController;
+    private ViewCatalogService viewCatalogService;
+
     private AgentLoginService loginService;
     private Scene administratorMainPageScene;
     private Stage applicationPrimaryStage;
@@ -27,6 +28,7 @@ public class AgentLoginController {
             String password = passwordField.getText();
             Agent agent = loginService.login(username, password);
             mainPageController.setLoggedAgent(agent);
+            viewCatalogService.addObserver(viewCatalogController);
             applicationPrimaryStage.setScene(administratorMainPageScene);
         } catch (ExceptionBaseClass exception) {
             showExceptionMessageBox(exception);
@@ -52,5 +54,13 @@ public class AgentLoginController {
 
     public void setMainPageController(AgentMainPageController mainPageController) {
         this.mainPageController = mainPageController;
+    }
+
+    public void setViewCatalogController(ViewCatalogController viewCatalogController) {
+        this.viewCatalogController = viewCatalogController;
+    }
+
+    public void setCatalogAdministrationService(ViewCatalogService catalogAdministrationService) {
+        this.viewCatalogService = catalogAdministrationService;
     }
 }

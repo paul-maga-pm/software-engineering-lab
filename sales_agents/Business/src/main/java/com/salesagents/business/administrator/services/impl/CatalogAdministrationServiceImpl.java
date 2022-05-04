@@ -2,12 +2,13 @@ package com.salesagents.business.administrator.services.impl;
 
 import com.salesagents.business.administrator.services.CatalogAdministrationService;
 import com.salesagents.business.administrator.services.validators.ProductValidator;
+import com.salesagents.business.utils.ProductObservable;
 import com.salesagents.dataaccess.repository.ProductCatalogRepository;
 import com.salesagents.domain.models.Product;
 
 import java.util.Collection;
 
-public class CatalogAdministrationServiceImpl implements CatalogAdministrationService {
+public class CatalogAdministrationServiceImpl extends CatalogAdministrationService {
     private ProductValidator productValidator;
     private ProductCatalogRepository productRepository;
 
@@ -18,24 +19,40 @@ public class CatalogAdministrationServiceImpl implements CatalogAdministrationSe
     }
 
     @Override
-    public boolean add(Product product) {
+    synchronized public boolean add(Product product) {
         productValidator.validate(product);
-        return productRepository.add(product);
+        boolean productWasAdded = productRepository.add(product);
+
+        if (productWasAdded)
+            notifyThatProductWasAdded(product);
+
+        return productWasAdded;
     }
 
     @Override
-    public boolean update(Product product) {
+    synchronized  public boolean update(Product product) {
         productValidator.validate(product);
-        return productRepository.update(product);
+
+        boolean productWasUpdated = productRepository.update(product);
+
+        if (productWasUpdated)
+            notifyThatProductWasUpdated(product);
+
+        return productWasUpdated;
     }
 
     @Override
-    public boolean remove(String productId) {
-        return productRepository.remove(productId);
+    synchronized  public boolean remove(String productId) {
+        boolean productWasRemoved = productRepository.remove(productId);
+
+        if (productWasRemoved)
+            notifyThatProductWasRemoved(productId);
+
+        return productWasRemoved;
     }
 
     @Override
-    public Collection<Product> getAll() {
+    synchronized  public Collection<Product> getAll() {
         return productRepository.getAll();
     }
 }

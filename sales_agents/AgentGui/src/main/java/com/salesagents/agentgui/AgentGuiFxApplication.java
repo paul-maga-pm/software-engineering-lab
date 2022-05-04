@@ -33,13 +33,15 @@ public class AgentGuiFxApplication extends Application {
         FXMLLoader catalogViewLoader = new FXMLLoader(AgentGuiFxApplication.class.getResource("catalog-view.fxml"));
         Scene catalogScene = new Scene(catalogViewLoader.load());
 
+        ViewCatalogController viewCatalogController = catalogViewLoader.getController();
+        viewCatalogController.setViewCatalogService(viewCatalogService);
+
         AgentLoginController loginController = loginSceneLoader.getController();
         loginController.setApplicationPrimaryStage(primaryStage);
         loginController.setLoginService(loginService);
         loginController.setAdministratorMainPageScene(mainPageScene);
-
-        ViewCatalogController viewCatalogController = catalogViewLoader.getController();
-        viewCatalogController.setViewCatalogService(viewCatalogService);
+        loginController.setViewCatalogController(viewCatalogController);
+        loginController.setCatalogAdministrationService(viewCatalogService);
 
 
         AgentMainPageController mainPageController = mainPageLoader.getController();
@@ -49,7 +51,7 @@ public class AgentGuiFxApplication extends Application {
         mainPageController.setApplicationPrimaryStage(primaryStage);
         mainPageController.setLoginService(loginService);
         mainPageController.setViewCatalogController(viewCatalogController);
-
+        mainPageController.setViewCatalogService(viewCatalogService);
 
         loginController.setMainPageController(mainPageController);
 

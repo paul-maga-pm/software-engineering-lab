@@ -8,7 +8,7 @@ import com.salesagents.networking.proxy.RpcClientStream;
 
 import java.util.Collection;
 
-public class CatalogAdministrationProxy implements CatalogAdministrationService {
+public class CatalogAdministrationProxy extends CatalogAdministrationService {
     private RpcClientStream clientStream;
 
     public CatalogAdministrationProxy(RpcClientStream clientStream) {

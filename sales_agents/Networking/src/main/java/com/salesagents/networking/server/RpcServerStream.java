@@ -1,5 +1,7 @@
 package com.salesagents.networking.server;
 
+import com.salesagents.business.utils.ProductObserver;
+import com.salesagents.domain.models.Product;
 import com.salesagents.networking.protocols.RpcRequest;
 import com.salesagents.networking.protocols.RpcResponse;
 
@@ -31,11 +33,15 @@ public class RpcServerStream {
     }
 
     public void sendResponse(RpcResponse response) throws IOException {
-        serverResponseStream.writeObject(response);
-        serverResponseStream.flush();
+        synchronized (serverResponseStream) {
+            serverResponseStream.writeObject(response);
+            serverResponseStream.reset();
+        }
     }
 
     public RpcRequest readRequest() throws IOException, ClassNotFoundException {
-        return (RpcRequest) clientRequestStream.readObject();
+        synchronized (clientRequestStream) {
+            return (RpcRequest) clientRequestStream.readObject();
+        }
     }
 }
