@@ -37,6 +37,7 @@ public class AdminLoginProxy implements AdministratorLoginService {
         if (response != null) {
             if (response.getType() == RpcResponseType.ERROR) {
                 String error = response.getData().toString();
+                rpcClientStream.closeConnection();
                 throw new ExceptionBaseClass(error);
             } else if (response.getType() == RpcResponseType.OK) {
                 return (Administrator)response.getData();

@@ -9,9 +9,11 @@ import com.salesagents.domain.models.Employee;
 
 public class AdministratorLoginServiceImpl implements AdministratorLoginService {
     private EmployeeRepository employeeRepository;
+    private boolean isAdminLogged;
 
     public AdministratorLoginServiceImpl(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
+        isAdminLogged = false;
     }
 
     @Override
@@ -22,6 +24,10 @@ public class AdministratorLoginServiceImpl implements AdministratorLoginService 
 
         try {
             administrator = (Administrator) employee;
+
+            if (isAdminLogged)
+                throw new LoginException("Administrator is already logged");
+            isAdminLogged = true;
         } catch (ClassCastException exception) {
             throw new LoginException("Incorrect username or password");
         }
@@ -31,6 +37,6 @@ public class AdministratorLoginServiceImpl implements AdministratorLoginService 
 
     @Override
     public void logout() {
-
+        isAdminLogged = false;
     }
 }
