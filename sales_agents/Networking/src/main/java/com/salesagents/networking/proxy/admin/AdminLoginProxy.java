@@ -1,4 +1,4 @@
-package com.salesagents.networking.proxy;
+package com.salesagents.networking.proxy.admin;
 
 import com.salesagents.business.administrator.services.AdministratorLoginService;
 import com.salesagents.domain.models.Administrator;
@@ -7,6 +7,7 @@ import com.salesagents.networking.protocols.AdminRpcRequest;
 import com.salesagents.networking.protocols.AdminRpcRequestType;
 import com.salesagents.networking.protocols.RpcResponse;
 import com.salesagents.networking.protocols.RpcResponseType;
+import com.salesagents.networking.proxy.RpcClientStream;
 
 import java.util.HashMap;
 import java.util.Map;

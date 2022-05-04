@@ -28,7 +28,8 @@ public class ServerApplication {
 
         RpcServer server = new RpcServer(5555);
         server.setAdminLoginService(administratorLoginService);
-
+        server.setAgentsAdministrationService(agentAdministrationService);
+        server.setCatalogAdministrationService(catalogAdministrationService);
         server.start();
     }
 }

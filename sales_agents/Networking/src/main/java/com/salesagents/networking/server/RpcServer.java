@@ -1,6 +1,8 @@
 package com.salesagents.networking.server;
 
 import com.salesagents.business.administrator.services.AdministratorLoginService;
+import com.salesagents.business.administrator.services.AgentsAdministrationService;
+import com.salesagents.business.administrator.services.CatalogAdministrationService;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -16,6 +18,8 @@ public class RpcServer {
     private ServerSocket serverSocket;
 
     private AdministratorLoginService adminLoginService;
+    private AgentsAdministrationService agentsAdministrationService;
+    private CatalogAdministrationService catalogAdministrationService;
 
 
     public RpcServer(int port) {
@@ -25,6 +29,14 @@ public class RpcServer {
 
     public void setAdminLoginService(AdministratorLoginService adminLoginService) {
         this.adminLoginService = adminLoginService;
+    }
+
+    public void setAgentsAdministrationService(AgentsAdministrationService agentsAdministrationService) {
+        this.agentsAdministrationService = agentsAdministrationService;
+    }
+
+    public void setCatalogAdministrationService(CatalogAdministrationService catalogAdministrationService) {
+        this.catalogAdministrationService = catalogAdministrationService;
     }
 
     public void start() {
@@ -48,6 +60,8 @@ public class RpcServer {
                 RpcWorker worker = new RpcWorker(serverStream);
 
                 worker.setAdminLoginService(adminLoginService);
+                worker.setAgentsAdministrationService(agentsAdministrationService);
+                worker.setCatalogAdministrationService(catalogAdministrationService);
                 workersThreadPool.execute(worker);
             } catch (IOException e) {
                 System.out.println(e.getMessage());

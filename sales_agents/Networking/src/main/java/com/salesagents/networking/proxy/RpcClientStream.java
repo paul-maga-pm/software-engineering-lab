@@ -88,11 +88,11 @@ public class RpcClientStream {
                         try {
                             responseBlockingQueue.put(response);
                         } catch (InterruptedException e) {
-                            System.out.println(e.getMessage());
+                            System.out.println(e.toString());
                         }
                     }
                 } catch (IOException | ClassNotFoundException exception) {
-                    System.out.println(exception.getMessage());
+                    System.out.println(exception.toString());
                 }
             }
         }
