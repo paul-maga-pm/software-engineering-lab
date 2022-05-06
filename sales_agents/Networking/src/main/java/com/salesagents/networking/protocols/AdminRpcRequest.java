@@ -10,19 +10,19 @@ public class AdminRpcRequest implements RpcRequest, Serializable {
 
     }
 
-    public static class RequestBuilder {
+    public static class AdminRequestBuilder {
         private AdminRpcRequest instance;
 
-        public RequestBuilder() {
+        public AdminRequestBuilder() {
             instance = new AdminRpcRequest();
         }
 
-        public RequestBuilder setType(AdminRpcRequestType type) {
+        public AdminRequestBuilder setType(AdminRpcRequestType type) {
             instance.type = type;
             return this;
         }
 
-        public RequestBuilder setData(Object data) {
+        public AdminRequestBuilder setData(Object data) {
             instance.data = data;
             return this;
         }

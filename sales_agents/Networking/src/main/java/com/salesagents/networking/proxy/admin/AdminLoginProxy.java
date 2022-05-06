@@ -26,7 +26,7 @@ public class AdminLoginProxy implements AdministratorLoginService {
         Map<String, String> authenticationInfoMap = new HashMap<>();
         authenticationInfoMap.put("username", username);
         authenticationInfoMap.put("password", password);
-        AdminRpcRequest loginRequest = new AdminRpcRequest.RequestBuilder()
+        AdminRpcRequest loginRequest = new AdminRpcRequest.AdminRequestBuilder()
                 .setData(authenticationInfoMap)
                 .setType(AdminRpcRequestType.LOGIN)
                 .build();
@@ -49,8 +49,7 @@ public class AdminLoginProxy implements AdministratorLoginService {
 
     @Override
     public void logout() {
-        AdminRpcRequest logoutRequest = new AdminRpcRequest
-                .RequestBuilder()
+        AdminRpcRequest logoutRequest = new AdminRpcRequest.AdminRequestBuilder()
                 .setType(AdminRpcRequestType.LOGOUT)
                 .build();
 

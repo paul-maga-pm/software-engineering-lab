@@ -17,8 +17,7 @@ public class CatalogAdministrationProxy extends CatalogAdministrationService {
 
     @Override
     public boolean add(Product product) {
-        AdminRpcRequest request = new AdminRpcRequest
-                .RequestBuilder()
+        AdminRpcRequest request = new AdminRpcRequest.AdminRequestBuilder()
                 .setData(product)
                 .setType(AdminRpcRequestType.ADD_PRODUCT)
                 .build();
@@ -39,8 +38,7 @@ public class CatalogAdministrationProxy extends CatalogAdministrationService {
 
     @Override
     public boolean update(Product product) {
-        AdminRpcRequest request = new AdminRpcRequest
-                .RequestBuilder()
+        AdminRpcRequest request = new AdminRpcRequest.AdminRequestBuilder()
                 .setType(AdminRpcRequestType.UPDATE_PRODUCT)
                 .setData(product)
                 .build();
@@ -59,8 +57,7 @@ public class CatalogAdministrationProxy extends CatalogAdministrationService {
 
     @Override
     public boolean remove(String productId) {
-        AdminRpcRequest request = new AdminRpcRequest
-                .RequestBuilder()
+        AdminRpcRequest request = new AdminRpcRequest.AdminRequestBuilder()
                 .setType(AdminRpcRequestType.REMOVE_PRODUCT)
                 .setData(productId)
                 .build();
@@ -79,8 +76,7 @@ public class CatalogAdministrationProxy extends CatalogAdministrationService {
 
     @Override
     public Collection<Product> getAll() {
-        AdminRpcRequest request = new AdminRpcRequest
-                .RequestBuilder()
+        AdminRpcRequest request = new AdminRpcRequest.AdminRequestBuilder()
                 .setType(AdminRpcRequestType.GET_ALL_PRODUCTS)
                 .build();
 

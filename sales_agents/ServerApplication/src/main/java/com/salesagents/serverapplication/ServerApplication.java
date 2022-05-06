@@ -7,11 +7,9 @@ import com.salesagents.business.administrator.services.validators.AgentValidator
 import com.salesagents.business.administrator.services.validators.ProductValidatorImpl;
 import com.salesagents.business.agent.services.AgentLoginService;
 import com.salesagents.business.agent.services.impl.AgentLoginServiceImpl;
-import com.salesagents.business.agent.services.impl.ViewCatalogServiceImpl;
 import com.salesagents.dataaccess.repository.hibernate.EmployeeDatabaseRepository;
 import com.salesagents.dataaccess.repository.hibernate.ProductCatalogDatabaseRepository;
 import com.salesagents.dataaccess.repository.security.Sha512HashAlgorithm;
-import com.salesagents.domain.models.Administrator;
 import com.salesagents.networking.server.RpcServer;
 import org.hibernate.cfg.Configuration;
 

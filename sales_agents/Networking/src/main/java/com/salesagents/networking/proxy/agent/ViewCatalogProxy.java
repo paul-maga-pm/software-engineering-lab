@@ -38,12 +38,10 @@ public class ViewCatalogProxy  extends ViewCatalogService {
         throw new ExceptionBaseClass("Invalid response from server");
     }
 
-    @Override
     public synchronized void addObserver(ProductObserver observer) {
         clientStream.addObserver(observer);
     }
 
-    @Override
     public synchronized void removeObserver(ProductObserver observer) {
         clientStream.removeObserver(observer);
     }

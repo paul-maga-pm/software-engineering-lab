@@ -20,8 +20,7 @@ public class AgentsAdministrationProxy implements AgentsAdministrationService {
 
     @Override
     public void addAgent(Agent agent) {
-        AdminRpcRequest request = new AdminRpcRequest
-                .RequestBuilder()
+        AdminRpcRequest request = new AdminRpcRequest.AdminRequestBuilder()
                 .setData(agent)
                 .setType(AdminRpcRequestType.REGISTER_AGENT)
                 .build();
@@ -43,8 +42,7 @@ public class AgentsAdministrationProxy implements AgentsAdministrationService {
 
     @Override
     public Collection<Agent> getAllAgents() {
-        AdminRpcRequest request = new AdminRpcRequest
-                .RequestBuilder()
+        AdminRpcRequest request = new AdminRpcRequest.AdminRequestBuilder()
                 .setType(AdminRpcRequestType.GET_ALL_AGENTS)
                 .build();
         clientStream.sendRequest(request);
