@@ -14,7 +14,7 @@ public class AgentLoginController {
     public TextField usernameTextField;
     public Button loginButton;
 
-    private AgentMainPageController mainPageController;
+    private AgentMainPageController mainController;
     private ViewCatalogController viewCatalogController;
     private ViewCatalogService viewCatalogService;
 
@@ -27,7 +27,7 @@ public class AgentLoginController {
             String username = usernameTextField.getText().strip();
             String password = passwordField.getText();
             Agent agent = loginService.login(username, password);
-            mainPageController.setLoggedAgent(agent);
+            mainController.setLoggedAgent(agent);
             viewCatalogService.addObserver(viewCatalogController);
             applicationPrimaryStage.setScene(administratorMainPageScene);
         } catch (ExceptionBaseClass exception) {
@@ -53,7 +53,7 @@ public class AgentLoginController {
     }
 
     public void setMainPageController(AgentMainPageController mainPageController) {
-        this.mainPageController = mainPageController;
+        this.mainController = mainPageController;
     }
 
     public void setViewCatalogController(ViewCatalogController viewCatalogController) {

@@ -1,6 +1,5 @@
 package com.salesagents.administratorgui.controllers;
 
-import com.salesagents.administratorgui.AdministratorGuiFxApplication;
 import com.salesagents.business.administrator.services.AdministratorLoginService;
 import com.salesagents.exceptions.ExceptionBaseClass;
 import javafx.event.ActionEvent;

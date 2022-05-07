@@ -1,8 +1,6 @@
 package com.salesagents.administratorgui.controllers;
 
-import com.salesagents.administratorgui.AdministratorGuiFxApplication;
 import com.salesagents.business.administrator.services.CatalogAdministrationService;
-import com.salesagents.domain.models.Agent;
 import com.salesagents.domain.models.Product;
 import com.salesagents.exceptions.ExceptionBaseClass;
 import javafx.application.Platform;

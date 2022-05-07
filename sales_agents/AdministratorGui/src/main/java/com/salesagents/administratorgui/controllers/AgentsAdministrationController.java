@@ -49,7 +49,11 @@ public class AgentsAdministrationController {
             agentTableView.setItems(agentObservableList);
             agentObservableList.setAll(allAgents);
         }
+    }
 
+    public void clearAgentsFromView() {
+        agentObservableList = null;
+        agentTableView.setItems(FXCollections.observableArrayList());
     }
 
     public void setAgentsAdministrationService(AgentsAdministrationService agentAdministrationService) {

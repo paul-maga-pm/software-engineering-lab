@@ -56,6 +56,7 @@ public class AdministratorMainPageController {
         BorderPane root = (BorderPane) mainPageScene.getRoot();
         root.setCenter(new AnchorPane());
         catalogController.clearProductsFromView();
+        agentsAdministrationController.clearAgentsFromView();
     }
 
     public void handleClickOnViewAgentsButton(ActionEvent event) {
