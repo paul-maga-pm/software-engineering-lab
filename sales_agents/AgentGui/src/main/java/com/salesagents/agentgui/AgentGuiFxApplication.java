@@ -11,11 +11,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class AgentGuiFxApplication extends Application {
-    private static AgentLoginService loginService;
+    private static AgentLoginService loginProxy;
     private static ViewCatalogService viewCatalogService;
 
     public static void setLoginService(AgentLoginService loginService) {
-        AgentGuiFxApplication.loginService = loginService;
+        AgentGuiFxApplication.loginProxy = loginService;
     }
 
     public static void setViewCatalogService(ViewCatalogService viewCatalogService) {
@@ -38,7 +38,7 @@ public class AgentGuiFxApplication extends Application {
 
         AgentLoginController loginController = loginSceneLoader.getController();
         loginController.setApplicationPrimaryStage(primaryStage);
-        loginController.setLoginService(loginService);
+        loginController.setLoginService(loginProxy);
         loginController.setAdministratorMainPageScene(mainPageScene);
         loginController.setViewCatalogController(viewCatalogController);
         loginController.setCatalogAdministrationService(viewCatalogService);
@@ -49,7 +49,7 @@ public class AgentGuiFxApplication extends Application {
         mainPageController.setLoginScene(loginScene);
         mainPageController.setViewCatalogScene(catalogScene);
         mainPageController.setApplicationPrimaryStage(primaryStage);
-        mainPageController.setLoginService(loginService);
+        mainPageController.setLoginService(loginProxy);
         mainPageController.setViewCatalogController(viewCatalogController);
         mainPageController.setViewCatalogService(viewCatalogService);
 
