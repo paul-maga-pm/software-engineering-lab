@@ -2,6 +2,7 @@ package com.salesagents.agentgui.controllers;
 
 import com.salesagents.business.agent.services.AgentLoginService;
 import com.salesagents.business.agent.services.ViewCatalogService;
+import com.salesagents.business.utils.ProductObservable;
 import com.salesagents.domain.models.Agent;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
@@ -70,5 +71,9 @@ public class AgentMainPageController {
 
     public void setViewCatalogService(ViewCatalogService viewCatalogService) {
         this.viewCatalogService = viewCatalogService;
+    }
+
+    public void bindToProductNotifications() {
+        this.viewCatalogService.addObserver(this.catalogController);
     }
 }

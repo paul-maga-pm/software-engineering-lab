@@ -1,7 +1,6 @@
 package com.salesagents.agentgui.controllers;
 
 import com.salesagents.business.agent.services.AgentLoginService;
-import com.salesagents.business.agent.services.ViewCatalogService;
 import com.salesagents.domain.models.Agent;
 import com.salesagents.exceptions.ExceptionBaseClass;
 import javafx.event.ActionEvent;
@@ -15,8 +14,6 @@ public class AgentLoginController {
     public Button loginButton;
 
     private AgentMainPageController mainController;
-    private ViewCatalogController viewCatalogController;
-    private ViewCatalogService viewCatalogService;
 
     private AgentLoginService loginService;
     private Scene administratorMainPageScene;
@@ -28,7 +25,7 @@ public class AgentLoginController {
             String password = passwordField.getText();
             Agent agent = loginService.login(username, password);
             mainController.setLoggedAgent(agent);
-            viewCatalogService.addObserver(viewCatalogController);
+            mainController.bindToProductNotifications();
             applicationPrimaryStage.setScene(administratorMainPageScene);
         } catch (ExceptionBaseClass exception) {
             showExceptionMessageBox(exception);
@@ -54,13 +51,5 @@ public class AgentLoginController {
 
     public void setMainPageController(AgentMainPageController mainPageController) {
         this.mainController = mainPageController;
-    }
-
-    public void setViewCatalogController(ViewCatalogController viewCatalogController) {
-        this.viewCatalogController = viewCatalogController;
-    }
-
-    public void setCatalogAdministrationService(ViewCatalogService catalogAdministrationService) {
-        this.viewCatalogService = catalogAdministrationService;
     }
 }

@@ -40,8 +40,6 @@ public class AgentGuiFxApplication extends Application {
         loginController.setApplicationPrimaryStage(primaryStage);
         loginController.setLoginService(loginProxy);
         loginController.setAdministratorMainPageScene(mainPageScene);
-        loginController.setViewCatalogController(viewCatalogController);
-        loginController.setCatalogAdministrationService(viewCatalogService);
 
 
         AgentMainPageController mainPageController = mainPageLoader.getController();
