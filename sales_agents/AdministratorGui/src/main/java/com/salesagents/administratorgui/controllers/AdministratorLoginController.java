@@ -13,6 +13,12 @@ public class AdministratorLoginController {
     private AdministratorLoginService loginService;
     private Scene administratorMainPageScene;
     private Stage applicationPrimaryStage;
+    private AdministratorMainPageController mainPageController;
+
+
+    public void setMainPageController(AdministratorMainPageController mainPageController) {
+        this.mainPageController = mainPageController;
+    }
 
     public void setAdministratorMainPageScene(Scene administratorMainPageScene) {
         this.administratorMainPageScene = administratorMainPageScene;
@@ -39,6 +45,7 @@ public class AdministratorLoginController {
             String username = usernameTextField.getText().strip();
             String password = passwordField.getText();
             loginService.login(username, password);
+            mainPageController.bindToProductUpdates();
             applicationPrimaryStage.setScene(administratorMainPageScene);
         } catch (ExceptionBaseClass exception) {
             showExceptionMessageBox(exception);

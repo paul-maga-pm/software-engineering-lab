@@ -21,6 +21,17 @@ public class Order implements Serializable {
     @Column (name = "client_name")
     private String clientName;
 
+    @Column (name = "total")
+    private double total;
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
     @Column(name = "placing_date")
     private LocalDateTime placingDate;
 
@@ -51,17 +62,24 @@ public class Order implements Serializable {
     }
 
     public void addOrderDetail(OrderDetail orderDetail) {
-        if (!this.orderDetailSet.add(orderDetail)) {
-            Predicate<OrderDetail> pred = (o) -> o.equals(orderDetail);
+        this.total += orderDetail.getQuantityInOrder() * orderDetail.getProduct().getPrice();
+        int newQuantityInStock;
+        if (orderDetailSet.contains(orderDetail)) {
+            Predicate<OrderDetail> pred = (o) -> o.getProduct().getId().equals(orderDetail.getProduct().getId());
             int oldQuantity = this.orderDetailSet.stream().filter(pred).findFirst().get().getQuantityInOrder();
             orderDetailSet.remove(orderDetail);
+
+            int oldQuantityInStock = orderDetail.getProduct().getQuantityInStock();
+            newQuantityInStock = oldQuantityInStock - orderDetail.getQuantityInOrder();
             int newQuantity = oldQuantity + orderDetail.getQuantityInOrder();
             orderDetail.setQuantityInOrder(newQuantity);
-            this.orderDetailSet.add(orderDetail);
+
+        } else {
+            int oldQuantityInStock = orderDetail.getProduct().getQuantityInStock();
+            newQuantityInStock = oldQuantityInStock - orderDetail.getQuantityInOrder();
         }
-        int oldQuantityInStock = orderDetail.getProduct().getQuantityInStock();
-        int newQuantityInStock = oldQuantityInStock - orderDetail.getQuantityInOrder();
         orderDetail.getProduct().setQuantityInStock(newQuantityInStock);
+        this.orderDetailSet.add(orderDetail);
     }
 
     public Set<OrderDetail> getOrderDetailSet() {

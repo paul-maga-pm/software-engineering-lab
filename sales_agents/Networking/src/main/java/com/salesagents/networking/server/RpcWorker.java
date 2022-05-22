@@ -89,12 +89,32 @@ public class RpcWorker implements Runnable, ProductObserver {
         if (request.getType() == AgentRpcRequestType.PLACE_ORDER)
             return handlePlaceOrderRequest(request);
 
+        if (request.getType() == AgentRpcRequestType.GET_ORDERS)
+            return handleGetOrdersOfAgentRequest(request);
+
         System.out.println("Invalid request");
         return new RpcResponse
                 .ResponseBuilder()
                 .setType(RpcResponseType.ERROR)
                 .setData("Invalid request")
                 .build();
+    }
+
+    private RpcResponse handleGetOrdersOfAgentRequest(AgentRpcRequest request) {
+        try {
+            String agentName = request.getData().toString();
+            Collection<Order> orders = orderService.findByAgent(agentName);
+            return new RpcResponse.ResponseBuilder()
+                    .setData(orders)
+                    .setType(RpcResponseType.OK)
+                    .build();
+        } catch (ExceptionBaseClass exception) {
+            return new RpcResponse
+                    .ResponseBuilder()
+                    .setType(RpcResponseType.ERROR)
+                    .setData(exception.getMessage())
+                    .build();
+        }
     }
 
     private RpcResponse handlePlaceOrderRequest(AgentRpcRequest request) {
@@ -117,6 +137,7 @@ public class RpcWorker implements Runnable, ProductObserver {
         agentLoginService.logout();
         clientIsConnected = false;
         catalogAdministrationService.removeObserver(this);
+        orderService.removeObserver(this);
         return new RpcResponse
                 .ResponseBuilder()
                 .setType(RpcResponseType.OK)
@@ -131,6 +152,7 @@ public class RpcWorker implements Runnable, ProductObserver {
         try {
             Agent agent = agentLoginService.login(username, password);
             catalogAdministrationService.addObserver(this);
+            orderService.addObserver(this);
             return new RpcResponse
                     .ResponseBuilder()
                     .setType(RpcResponseType.OK)
@@ -297,6 +319,7 @@ public class RpcWorker implements Runnable, ProductObserver {
 
         try {
             Administrator admin = adminLoginService.login(username, password);
+            orderService.addObserver(this);
             return new RpcResponse.ResponseBuilder()
                     .setType(RpcResponseType.OK)
                     .setData(admin)

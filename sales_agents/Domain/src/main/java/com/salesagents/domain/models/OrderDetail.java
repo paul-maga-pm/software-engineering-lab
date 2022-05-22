@@ -57,7 +57,7 @@ public class OrderDetail implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(product, quantityInOrder);
+        return Objects.hash(product.getId());
     }
 
     @Override

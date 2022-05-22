@@ -55,6 +55,7 @@ public class AdministratorMainPageController {
         primaryStage.setScene(loginScene);
         BorderPane root = (BorderPane) mainPageScene.getRoot();
         root.setCenter(new AnchorPane());
+        catalogController.unsubscribeFromProductUpdates();
         catalogController.clearProductsFromView();
         agentsAdministrationController.clearAgentsFromView();
     }
@@ -77,5 +78,9 @@ public class AdministratorMainPageController {
 
     public void setCatalogViewScene(Scene catalogViewScene) {
         this.catalogViewScene = catalogViewScene;
+    }
+
+    public void bindToProductUpdates() {
+        catalogController.bindToProductUpdates();
     }
 }

@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 
+import java.util.Collection;
 import java.util.List;
 
 public class OrderDatabaseRepository implements OrderRepository {
@@ -19,7 +20,7 @@ public class OrderDatabaseRepository implements OrderRepository {
     }
 
     @Override
-    public List<Order> getAll() {
+    public Collection<Order> getAll() {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
@@ -50,11 +51,11 @@ public class OrderDatabaseRepository implements OrderRepository {
     }
 
     @Override
-    public List<Order> findByAgent(String username) {
+    public Collection<Order> findByAgent(String username) {
         Transaction transaction = null;
 
         try (Session session = sessionFactory.openSession()) {
-            var query = session.createQuery("from Order where agent_username=:=username_param", Order.class);
+            var query = session.createQuery("select O from Order O where O.agent.name = :username_param");
             query.setParameter("username_param", username);
             transaction = session.beginTransaction();
             var result = query.getResultList();

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.salesagents.agentgui.controllers.ViewOrdersController">
+   <children>
+      <TableView fx:id="ordersTableView" layoutX="6.0" layoutY="34.0" prefHeight="304.0" prefWidth="300.0">
+        <columns>
+          <TableColumn fx:id="orderNoColumn" prefWidth="75.0" text="Order no" />
+          <TableColumn fx:id="clientNameColumn" prefWidth="75.0" text="Client name" />
+            <TableColumn fx:id="placingDateColumn" prefWidth="75.0" text="Placed on" />
+            <TableColumn fx:id="totalColumn" prefWidth="75.0" text="Total" />
+        </columns>
+      </TableView>
+      <TableView fx:id="productsTableView" layoutX="316.0" layoutY="34.0" prefHeight="304.0" prefWidth="257.0">
+        <columns>
+          <TableColumn fx:id="idColumn" prefWidth="86.199951171875" text="Product id" />
+          <TableColumn fx:id="productNameColumn" prefWidth="92.2000732421875" text="Product name" />
+            <TableColumn fx:id="quantityColumn" prefWidth="75.0" text="Quantity" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

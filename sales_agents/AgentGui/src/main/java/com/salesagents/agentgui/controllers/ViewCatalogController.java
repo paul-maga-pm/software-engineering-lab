@@ -41,6 +41,7 @@ public class ViewCatalogController implements ProductObserver {
     public TableColumn<OrderDetail, Integer> productQuantityInOrder;
 
     public ObservableList<OrderDetail> orderDetailsObservableList = null;
+    public TextField orderTotalField;
 
 
     private ViewCatalogService viewCatalogService;
@@ -87,6 +88,10 @@ public class ViewCatalogController implements ProductObserver {
         currentOrder = null;
         orderDetailsObservableList = null;
         orderDetailTableView.setItems(FXCollections.observableArrayList());
+
+        productIdInDetail.setText("");
+        orderTotalField.setText("");
+        clientNameField.setText("");
     }
 
     public void loadProductsToView() {
@@ -158,7 +163,13 @@ public class ViewCatalogController implements ProductObserver {
                     .findFirst()
                     .get();
 
-            int selectedQuantity = Integer.parseInt(quantityField.getText());
+            int selectedQuantity;
+            try {
+                selectedQuantity = Integer.parseInt(quantityField.getText());
+            } catch (NumberFormatException exception) {
+                showExceptionMessageBox(new ExceptionBaseClass("Invalid numeric value for quantity"));
+                return;
+            }
 
             if (selectedQuantity >  selectedProduct.getQuantityInStock()) {
                 showExceptionMessageBox(new ExceptionBaseClass("Invalid quantity"));
@@ -169,12 +180,13 @@ public class ViewCatalogController implements ProductObserver {
             currentOrder.addOrderDetail(detail);
 
             if (orderDetailsObservableList.contains(detail)) {
-                int index = orderDetailsObservableList.indexOf(detail);
-                int oldQuant = orderDetailsObservableList.get(index).getQuantityInOrder();
-                orderDetailsObservableList.get(index).setQuantityInOrder(oldQuant + detail.getQuantityInOrder());
+                var index = orderDetailsObservableList.indexOf(detail);
+                orderDetailsObservableList.get(index).setQuantityInOrder(detail.getQuantityInOrder());
                 orderDetailTableView.refresh();
             } else orderDetailsObservableList.add(detail);
             productTableView.refresh();
+
+            orderTotalField.setText(String.valueOf(currentOrder.getTotal()));
         });
     }
 
@@ -194,7 +206,9 @@ public class ViewCatalogController implements ProductObserver {
             currentOrder = null;
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Order has been placed", ButtonType.CLOSE);
             alert.showAndWait();
-            orderDetailTableView.setItems(FXCollections.observableArrayList());
+
+            orderDetailsObservableList = FXCollections.observableArrayList();
+            orderDetailTableView.setItems(orderDetailsObservableList);
         } catch (ExceptionBaseClass exception) {
             showExceptionMessageBox(exception);
         }

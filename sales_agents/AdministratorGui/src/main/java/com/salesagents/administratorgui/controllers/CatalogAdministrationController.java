@@ -1,6 +1,7 @@
 package com.salesagents.administratorgui.controllers;
 
 import com.salesagents.business.administrator.services.CatalogAdministrationService;
+import com.salesagents.business.utils.ProductObserver;
 import com.salesagents.domain.models.Product;
 import com.salesagents.exceptions.ExceptionBaseClass;
 import javafx.application.Platform;
@@ -15,7 +16,7 @@ import javafx.scene.control.*;
 
 import java.util.Collection;
 
-public class CatalogAdministrationController {
+public class CatalogAdministrationController implements ProductObserver {
     public TableColumn<Product, String> idTableColumn;
     public TableColumn<Product, String> nameTableColumn;
     public TableColumn<Product, String> typeTableColumn;
@@ -242,5 +243,37 @@ public class CatalogAdministrationController {
         } catch (ExceptionBaseClass exception) {
             showExceptionMessageBox(exception);
         }
+    }
+
+    @Override
+    public void productWasAdded(Product newProduct) {
+
+    }
+
+    @Override
+    public void productWasUpdated(Product newValueOfProduct) {
+        Platform.runLater(() -> {
+            for(int i = 0; i < productObservableList.size(); i++) {
+                String crtId = productObservableList.get(i).getId();
+                if (newValueOfProduct.getId().equals(crtId)) {
+                    productObservableList.set(i, newValueOfProduct);
+                    break;
+                }
+            }
+            productTableView.refresh();
+        });
+    }
+
+    @Override
+    public void productWasRemoved(String idOfRemovedProduct) {
+
+    }
+
+    public void bindToProductUpdates() {
+        this.catalogService.addObserver(this);
+    }
+
+    public void unsubscribeFromProductUpdates() {
+        this.catalogService.removeObserver(this);
     }
 }

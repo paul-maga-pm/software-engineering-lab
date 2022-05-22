@@ -68,6 +68,8 @@ public class AdministratorGuiFxApplication extends Application {
         mainPageController.setAgentsAdministrationController(agentsAdministrationController);
         mainPageController.setCatalogController(catalogController);
 
+        loginController.setMainPageController(mainPageController);
+
         primaryStage.setScene(loginScene);
         primaryStage.show();
     }

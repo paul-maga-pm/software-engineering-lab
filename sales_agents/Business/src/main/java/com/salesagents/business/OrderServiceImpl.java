@@ -5,7 +5,7 @@ import com.salesagents.domain.models.Order;
 
 import java.util.Collection;
 
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl extends OrderService {
     private OrderRepository orderRepository;
 
     public OrderServiceImpl(OrderRepository orderRepository) {
@@ -15,6 +15,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void placeOrder(Order order) {
         this.orderRepository.save(order);
+
+        for (var detail : order.getOrderDetailSet())
+            notifyThatProductWasUpdated(detail.getProduct());
     }
 
     @Override

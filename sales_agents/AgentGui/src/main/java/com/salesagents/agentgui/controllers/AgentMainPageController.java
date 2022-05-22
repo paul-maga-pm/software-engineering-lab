@@ -1,19 +1,24 @@
 package com.salesagents.agentgui.controllers;
 
+import com.salesagents.agentgui.AgentGuiFxApplication;
 import com.salesagents.business.OrderService;
 import com.salesagents.business.agent.services.AgentLoginService;
 import com.salesagents.business.agent.services.ViewCatalogService;
 import com.salesagents.business.utils.ProductObservable;
 import com.salesagents.domain.models.Agent;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class AgentMainPageController {
     public Button viewCatalogButton;
+    public Button viewPlacedOrdersButton;
     private Stage applicationPrimaryStage;
     private Scene mainPageScene;
     private Scene loginScene;
@@ -23,6 +28,7 @@ public class AgentMainPageController {
     private ViewCatalogController catalogController;
     private ViewCatalogService viewCatalogService;
     private OrderService orderService;
+    private ViewOrdersController orderController;
 
     public void setLoginService(AgentLoginService loginService) {
         this.loginService = loginService;
@@ -52,6 +58,10 @@ public class AgentMainPageController {
         applicationPrimaryStage.setScene(loginScene);
         loggedAgent = null;
         catalogController.clearProductsFromTableView();
+
+        if (orderController != null) {
+            orderController.clearOrdersFromView();
+        }
         viewCatalogService.removeObserver(catalogController);
         BorderPane root = (BorderPane) mainPageScene.getRoot();
         root.setCenter(new AnchorPane());
@@ -83,5 +93,20 @@ public class AgentMainPageController {
 
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
+    }
+
+    public void handleClickOnViewPlacedOrdersButton(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(AgentGuiFxApplication.class.getResource("orders-view.fxml"));
+        Scene viewOrdersScene = new Scene(loader.load());
+
+
+        if (this.orderController == null) {
+            this.orderController = loader.getController();
+            orderController.setLoggedAgent(loggedAgent);
+            orderController.setOrderService(orderService);
+            orderController.loadOrdersToView();
+        }
+        BorderPane root = (BorderPane) mainPageScene.getRoot();
+        root.setCenter(viewOrdersScene.getRoot());
     }
 }

@@ -1,6 +1,7 @@
 package com.salesagents.networking.proxy.admin;
 
 import com.salesagents.business.administrator.services.CatalogAdministrationService;
+import com.salesagents.business.utils.ProductObserver;
 import com.salesagents.domain.models.Product;
 import com.salesagents.exceptions.ExceptionBaseClass;
 import com.salesagents.networking.protocols.*;
@@ -13,6 +14,16 @@ public class CatalogAdministrationProxy extends CatalogAdministrationService {
 
     public CatalogAdministrationProxy(RpcClientStream clientStream) {
         this.clientStream = clientStream;
+    }
+
+    @Override
+    public synchronized void addObserver(ProductObserver observer) {
+        clientStream.addObserver(observer);
+    }
+
+    @Override
+    public synchronized void removeObserver(ProductObserver observer) {
+        clientStream.removeObserver(observer);
     }
 
     @Override

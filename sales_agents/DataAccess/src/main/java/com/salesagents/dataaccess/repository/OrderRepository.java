@@ -2,10 +2,10 @@ package com.salesagents.dataaccess.repository;
 
 import com.salesagents.domain.models.Order;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface OrderRepository {
-    List<Order> getAll();
+    Collection<Order> getAll();
     void save(Order order);
-    List<Order> findByAgent(String username);
+    Collection<Order> findByAgent(String username);
 }
