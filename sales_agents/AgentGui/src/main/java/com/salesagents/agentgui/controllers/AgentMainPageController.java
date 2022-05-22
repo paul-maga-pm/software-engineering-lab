@@ -28,7 +28,6 @@ public class AgentMainPageController {
     private ViewCatalogController catalogController;
     private ViewCatalogService viewCatalogService;
     private OrderService orderService;
-    private ViewOrdersController orderController;
 
     public void setLoginService(AgentLoginService loginService) {
         this.loginService = loginService;
@@ -59,9 +58,6 @@ public class AgentMainPageController {
         loggedAgent = null;
         catalogController.clearProductsFromTableView();
 
-        if (orderController != null) {
-            orderController.clearOrdersFromView();
-        }
         viewCatalogService.removeObserver(catalogController);
         BorderPane root = (BorderPane) mainPageScene.getRoot();
         root.setCenter(new AnchorPane());
@@ -97,16 +93,12 @@ public class AgentMainPageController {
 
     public void handleClickOnViewPlacedOrdersButton(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(AgentGuiFxApplication.class.getResource("orders-view.fxml"));
-        Scene viewOrdersScene = new Scene(loader.load());
-
-
-        if (this.orderController == null) {
-            this.orderController = loader.getController();
-            orderController.setLoggedAgent(loggedAgent);
-            orderController.setOrderService(orderService);
-            orderController.loadOrdersToView();
-        }
+        var orderViewScene = new Scene(loader.load());
+        ViewOrdersController orderController = loader.getController();
+        orderController.setOrderService(orderService);
+        orderController.setLoggedAgent(this.loggedAgent);
+        orderController.loadOrdersToView();
         BorderPane root = (BorderPane) mainPageScene.getRoot();
-        root.setCenter(viewOrdersScene.getRoot());
+        root.setCenter(orderViewScene.getRoot());
     }
 }

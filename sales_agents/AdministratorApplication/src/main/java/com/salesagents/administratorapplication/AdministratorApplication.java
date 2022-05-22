@@ -5,8 +5,8 @@ import com.salesagents.networking.proxy.admin.AdminLoginProxy;
 import com.salesagents.networking.proxy.RpcClientStream;
 import com.salesagents.networking.proxy.admin.AgentsAdministrationProxy;
 import com.salesagents.networking.proxy.admin.CatalogAdministrationProxy;
+import com.salesagents.networking.proxy.OrderServiceProxy;
 import javafx.application.Application;
-import org.hibernate.cfg.Configuration;
 
 public class AdministratorApplication {
     public static void main(String[] args) {
@@ -15,11 +15,12 @@ public class AdministratorApplication {
         var administratorLoginService = new AdminLoginProxy(clientStream);
         var agentAdministrationService = new AgentsAdministrationProxy(clientStream);
         var catalogAdministrationService = new CatalogAdministrationProxy(clientStream);
+        var orderService = new OrderServiceProxy(clientStream);
 
         AdministratorGuiFxApplication.setLoginService(administratorLoginService);
         AdministratorGuiFxApplication.setAgentsAdministrationService(agentAdministrationService);
         AdministratorGuiFxApplication.setCatalogAdministrationService(catalogAdministrationService);
-
+        AdministratorGuiFxApplication.setOrderService(orderService);
         Application.launch(AdministratorGuiFxApplication.class, args);
     }
 }

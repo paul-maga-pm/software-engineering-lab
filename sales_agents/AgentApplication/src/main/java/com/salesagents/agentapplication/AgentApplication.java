@@ -2,17 +2,11 @@ package com.salesagents.agentapplication;
 
 import com.salesagents.agentgui.AgentGuiFxApplication;
 import com.salesagents.business.agent.services.AgentLoginService;
-import com.salesagents.domain.models.Agent;
-import com.salesagents.domain.models.Order;
-import com.salesagents.domain.models.OrderDetail;
-import com.salesagents.domain.models.Product;
 import com.salesagents.networking.proxy.RpcClientStream;
 import com.salesagents.networking.proxy.agent.AgentLoginProxy;
-import com.salesagents.networking.proxy.agent.OrderServiceProxy;
+import com.salesagents.networking.proxy.OrderServiceProxy;
 import com.salesagents.networking.proxy.agent.ViewCatalogProxy;
 import javafx.application.Application;
-
-import java.time.LocalDateTime;
 
 public class AgentApplication {
     public static void main(String[] args) {

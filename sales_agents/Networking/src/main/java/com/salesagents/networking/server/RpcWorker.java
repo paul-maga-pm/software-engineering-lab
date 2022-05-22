@@ -172,6 +172,9 @@ public class RpcWorker implements Runnable, ProductObserver {
         if (request.getType() == AdminRpcRequestType.LOGIN)
             return handleAdminLoginRequest(request);
 
+        if (request.getType() == AdminRpcRequestType.GET_ORDERS)
+            return handleGetAllOrders();
+
         if (request.getType() == AdminRpcRequestType.LOGOUT)
             return handleAdminLogoutRequest();
 
@@ -199,6 +202,21 @@ public class RpcWorker implements Runnable, ProductObserver {
                 .setType(RpcResponseType.ERROR)
                 .setData("Invalid request")
                 .build();
+    }
+
+    private RpcResponse handleGetAllOrders() {
+        try {
+            var orders = orderService.getAllOrders();
+            return new RpcResponse.ResponseBuilder()
+                    .setData(orders)
+                    .setType(RpcResponseType.OK)
+                    .build();
+        } catch (ExceptionBaseClass exception) {
+            return new RpcResponse.ResponseBuilder()
+                    .setType(RpcResponseType.ERROR)
+                    .setData(exception.getMessage())
+                    .build();
+        }
     }
 
     private RpcResponse handleRemoveProductAdminRequest(AdminRpcRequest request) {

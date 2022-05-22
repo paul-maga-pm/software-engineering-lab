@@ -8,5 +8,5 @@ public enum AdminRpcRequestType {
     ADD_PRODUCT,
     REMOVE_PRODUCT,
     UPDATE_PRODUCT,
-    GET_ALL_PRODUCTS
+    GET_ORDERS, GET_ALL_PRODUCTS
 }

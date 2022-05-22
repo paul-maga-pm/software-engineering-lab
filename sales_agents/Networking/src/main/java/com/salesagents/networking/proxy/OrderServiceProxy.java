@@ -1,12 +1,10 @@
-package com.salesagents.networking.proxy.agent;
+package com.salesagents.networking.proxy;
 
 import com.salesagents.business.OrderService;
 import com.salesagents.business.utils.ProductObserver;
 import com.salesagents.domain.models.Order;
 import com.salesagents.exceptions.ExceptionBaseClass;
-import com.salesagents.networking.protocols.AgentRpcRequest;
-import com.salesagents.networking.protocols.AgentRpcRequestType;
-import com.salesagents.networking.protocols.RpcResponseType;
+import com.salesagents.networking.protocols.*;
 import com.salesagents.networking.proxy.RpcClientStream;
 
 import java.util.Collection;
@@ -49,7 +47,22 @@ public class OrderServiceProxy extends OrderService {
 
     @Override
     public Collection<Order> getAllOrders() {
-        return null;
+        AdminRpcRequest request = new AdminRpcRequest.AdminRequestBuilder()
+                .setType(AdminRpcRequestType.GET_ORDERS)
+                .build();
+
+        clientStream.sendRequest(request);
+        var response = clientStream.readResponse();
+
+        if (response != null) {
+            if (response.getType() == RpcResponseType.OK) {
+                return (Collection<Order>)response.getData();
+            }
+            else if (response.getType() == RpcResponseType.ERROR)
+                throw new ExceptionBaseClass(response.getData().toString());
+        }
+        throw new ExceptionBaseClass("Invalid response from server");
+
     }
 
     @Override

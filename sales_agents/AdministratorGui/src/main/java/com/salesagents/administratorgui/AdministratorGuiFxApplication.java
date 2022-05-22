@@ -4,6 +4,7 @@ import com.salesagents.administratorgui.controllers.AdministratorLoginController
 import com.salesagents.administratorgui.controllers.AdministratorMainPageController;
 import com.salesagents.administratorgui.controllers.AgentsAdministrationController;
 import com.salesagents.administratorgui.controllers.CatalogAdministrationController;
+import com.salesagents.business.OrderService;
 import com.salesagents.business.administrator.services.AdministratorLoginService;
 import com.salesagents.business.administrator.services.AgentsAdministrationService;
 import com.salesagents.business.administrator.services.CatalogAdministrationService;
@@ -16,6 +17,7 @@ public class AdministratorGuiFxApplication extends Application {
     private static AdministratorLoginService loginService;
     private static AgentsAdministrationService agentAdministrationService;
     private static CatalogAdministrationService catalogAdministrationService;
+    private static OrderService orderService;
 
     public static void setLoginService(AdministratorLoginService loginService) {
         AdministratorGuiFxApplication.loginService = loginService;
@@ -27,6 +29,10 @@ public class AdministratorGuiFxApplication extends Application {
 
     public static void setCatalogAdministrationService(CatalogAdministrationService catalogAdministrationService) {
         AdministratorGuiFxApplication.catalogAdministrationService = catalogAdministrationService;
+    }
+
+    public static void setOrderService(OrderService orderService) {
+        AdministratorGuiFxApplication.orderService = orderService;
     }
 
 
@@ -57,6 +63,7 @@ public class AdministratorGuiFxApplication extends Application {
         catalogController.setCatalogAdministrationService(catalogAdministrationService);
 
         AdministratorMainPageController mainPageController = mainPageLoader.getController();
+        mainPageController.setOrderService(orderService);
         mainPageController.setLoginScene(loginScene);
         mainPageController.setMainPageScene(mainPageScene);
         mainPageController.setAgentsViewScene(agentsViewScene);

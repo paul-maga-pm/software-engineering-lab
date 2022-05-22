@@ -1,16 +1,22 @@
 package com.salesagents.administratorgui.controllers;
 
+import com.salesagents.administratorgui.AdministratorGuiFxApplication;
+import com.salesagents.business.OrderService;
 import com.salesagents.business.administrator.services.AdministratorLoginService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class AdministratorMainPageController {
     public Button viewAgentsButton;
+    public Button viewOrdersButton;
 
     private Stage primaryStage;
     // Scenes
@@ -19,6 +25,7 @@ public class AdministratorMainPageController {
     private Scene agentsViewScene;
 
     private AdministratorLoginService loginService;
+    private OrderService orderService;
     private AgentsAdministrationController agentsAdministrationController;
     private CatalogAdministrationController catalogController;
     private Scene catalogViewScene;
@@ -82,5 +89,19 @@ public class AdministratorMainPageController {
 
     public void bindToProductUpdates() {
         catalogController.bindToProductUpdates();
+    }
+
+    public void handleClickOnViewOrdersButton(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(AdministratorGuiFxApplication.class.getResource("orders-view.fxml"));
+        var orderViewScene = new Scene(loader.load());
+        ViewOrdersController orderController = loader.getController();
+        orderController.setOrderService(orderService);
+        orderController.loadOrdersToView();
+        BorderPane root = (BorderPane) mainPageScene.getRoot();
+        root.setCenter(orderViewScene.getRoot());
+    }
+
+    public void setOrderService(OrderService orderService) {
+        this.orderService = orderService;
     }
 }
