@@ -48,8 +48,6 @@ public class EmployeeDatabaseRepository implements EmployeeRepository {
                 if (saveTransaction != null)
                     saveTransaction.rollback();
                 throw new DatabaseException(exception);
-            } finally {
-                employee.setPassword(password);
             }
         }
     }
@@ -65,9 +63,7 @@ public class EmployeeDatabaseRepository implements EmployeeRepository {
 
             if (result.size() == 0)
                 return null;
-            var foundEmployee = result.get(0);
-            foundEmployee.setPassword(password);
-            return foundEmployee;
+            return result.get(0);
         } catch (HibernateException exception) {
             throw new DatabaseException(exception);
         }
@@ -82,9 +78,7 @@ public class EmployeeDatabaseRepository implements EmployeeRepository {
 
             if (result.size() == 0)
                 return null;
-            var foundEmployee = result.get(0);
-            foundEmployee.setPassword("");
-            return foundEmployee;
+            return result.get(0);
         } catch (HibernateException exception) {
             throw new DatabaseException(exception);
         }

@@ -1,5 +1,6 @@
 package com.salesagents.networking.server;
 
+import com.salesagents.business.OrderService;
 import com.salesagents.business.administrator.services.AdministratorLoginService;
 import com.salesagents.business.administrator.services.AgentsAdministrationService;
 import com.salesagents.business.administrator.services.CatalogAdministrationService;
@@ -7,6 +8,7 @@ import com.salesagents.business.agent.services.AgentLoginService;
 import com.salesagents.business.utils.ProductObserver;
 import com.salesagents.domain.models.Administrator;
 import com.salesagents.domain.models.Agent;
+import com.salesagents.domain.models.Order;
 import com.salesagents.domain.models.Product;
 import com.salesagents.exceptions.ExceptionBaseClass;
 import com.salesagents.networking.protocols.*;
@@ -23,6 +25,7 @@ public class RpcWorker implements Runnable, ProductObserver {
     private boolean clientIsConnected;
     private CatalogAdministrationService catalogAdministrationService;
     private AgentLoginService agentLoginService;
+    private OrderService orderService;
 
     public RpcWorker(RpcServerStream serverStream) {
         this.serverStream = serverStream;
@@ -83,12 +86,31 @@ public class RpcWorker implements Runnable, ProductObserver {
         if (request.getType() == AgentRpcRequestType.GET_ALL_PRODUCTS)
             return handleGetAllProductsRequest();
 
+        if (request.getType() == AgentRpcRequestType.PLACE_ORDER)
+            return handlePlaceOrderRequest(request);
+
         System.out.println("Invalid request");
         return new RpcResponse
                 .ResponseBuilder()
                 .setType(RpcResponseType.ERROR)
                 .setData("Invalid request")
                 .build();
+    }
+
+    private RpcResponse handlePlaceOrderRequest(AgentRpcRequest request) {
+        Order order = (Order) request.getData();
+        try {
+            orderService.placeOrder(order);
+            return new RpcResponse.ResponseBuilder()
+                    .setType(RpcResponseType.OK)
+                    .build();
+        } catch (ExceptionBaseClass exception) {
+            return new RpcResponse
+                    .ResponseBuilder()
+                    .setType(RpcResponseType.ERROR)
+                    .setData(exception.getMessage())
+                    .build();
+        }
     }
 
     private RpcResponse handleLogoutAgentRequest() {
@@ -339,5 +361,9 @@ public class RpcWorker implements Runnable, ProductObserver {
         } catch (IOException exception) {
             System.out.println(exception.toString());
         }
+    }
+
+    public void setOrderService(OrderService orderService) {
+        this.orderService = orderService;
     }
 }

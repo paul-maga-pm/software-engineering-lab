@@ -1,5 +1,6 @@
 package com.salesagents.agentgui.controllers;
 
+import com.salesagents.business.OrderService;
 import com.salesagents.business.agent.services.AgentLoginService;
 import com.salesagents.business.agent.services.ViewCatalogService;
 import com.salesagents.business.utils.ProductObservable;
@@ -21,6 +22,7 @@ public class AgentMainPageController {
     private Agent loggedAgent;
     private ViewCatalogController catalogController;
     private ViewCatalogService viewCatalogService;
+    private OrderService orderService;
 
     public void setLoginService(AgentLoginService loginService) {
         this.loginService = loginService;
@@ -42,6 +44,7 @@ public class AgentMainPageController {
 
     public void setLoggedAgent(Agent agent) {
         loggedAgent = agent;
+        catalogController.setLoggedAgent(agent);
     }
 
     public void handleClickOnLogoutButton(ActionEvent event) {
@@ -61,6 +64,7 @@ public class AgentMainPageController {
     public void handleClickOnViewCatalogButton(ActionEvent event) {
         catalogController.setLoggedAgent(loggedAgent);
         catalogController.loadProductsToView();
+        catalogController.setOrderService(orderService);
         BorderPane root = (BorderPane) mainPageScene.getRoot();
         root.setCenter(catalogScene.getRoot());
     }
@@ -75,5 +79,9 @@ public class AgentMainPageController {
 
     public void bindToProductNotifications() {
         this.viewCatalogService.addObserver(this.catalogController);
+    }
+
+    public void setOrderService(OrderService orderService) {
+        this.orderService = orderService;
     }
 }

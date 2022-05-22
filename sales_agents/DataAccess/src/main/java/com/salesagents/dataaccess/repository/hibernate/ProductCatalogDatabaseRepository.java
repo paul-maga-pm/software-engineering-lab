@@ -3,14 +3,13 @@ package com.salesagents.dataaccess.repository.hibernate;
 import com.salesagents.dataaccess.repository.ProductCatalogRepository;
 import com.salesagents.dataaccess.repository.exceptions.DatabaseException;
 import com.salesagents.domain.models.Product;
+import jakarta.transaction.Transactional;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import javax.management.Query;
 import java.util.Collection;
-import java.util.Optional;
 
 public class ProductCatalogDatabaseRepository implements ProductCatalogRepository {
     private SessionFactory sessionFactory;

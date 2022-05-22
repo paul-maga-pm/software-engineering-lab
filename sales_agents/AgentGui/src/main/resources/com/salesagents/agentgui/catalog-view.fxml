@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="312.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.salesagents.agentgui.controllers.ViewCatalogController">
+<AnchorPane prefHeight="415.0" prefWidth="651.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.salesagents.agentgui.controllers.ViewCatalogController">
    <children>
       <TableView fx:id="productTableView" prefHeight="312.0" prefWidth="428.0">
         <columns>
@@ -12,8 +12,22 @@
             <TableColumn fx:id="typeTableColumn" prefWidth="55.39996337890625" text="Type" />
             <TableColumn fx:id="manufacturerTableColumn" prefWidth="116.5999755859375" text="Manufacturer" />
             <TableColumn fx:id="priceTableColumn" prefWidth="56.199951171875" text="Price" />
-            <TableColumn fx:id="quantityTableColumn" prefWidth="68.199951171875" text="Quantity" />
+            <TableColumn fx:id="quantityTableColumn" prefWidth="68.199951171875" text="In Stock" />
         </columns>
       </TableView>
+      <TableView fx:id="orderDetailTableView" layoutX="446.0" prefHeight="312.0" prefWidth="203.0">
+        <columns>
+          <TableColumn fx:id="productIdInDetail" prefWidth="60.0" text="Id" />
+          <TableColumn fx:id="productQuantityInOrder" prefWidth="143.20001220703125" text="Quantity in order" />
+        </columns>
+      </TableView>
+      <TextField fx:id="selectedProductIdField" editable="false" layoutX="76.0" layoutY="329.0" />
+      <TextField fx:id="quantityField" layoutX="300.0" layoutY="329.0" />
+      <Button fx:id="addDetailToOrderButton" layoutX="528.0" layoutY="329.0" mnemonicParsing="false" onAction="#handleClickOnAddDetail" text="Add" />
+      <Button fx:id="placeOrderButton" layoutX="374.0" layoutY="366.0" mnemonicParsing="false" onAction="#handleClickOnPlaceOrderButton" text="Place Order" />
+      <Label layoutX="14.0" layoutY="333.0" text="Product Id" />
+      <Label layoutX="243.0" layoutY="333.0" text="Quantity" />
+      <TextField fx:id="clientNameField" layoutX="214.0" layoutY="366.0" />
+      <Label layoutX="141.0" layoutY="370.0" text="Client name" />
   </children>
 </AnchorPane>

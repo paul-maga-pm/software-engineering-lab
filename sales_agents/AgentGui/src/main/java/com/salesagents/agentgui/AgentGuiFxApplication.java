@@ -3,8 +3,10 @@ package com.salesagents.agentgui;
 import com.salesagents.agentgui.controllers.AgentLoginController;
 import com.salesagents.agentgui.controllers.AgentMainPageController;
 import com.salesagents.agentgui.controllers.ViewCatalogController;
+import com.salesagents.business.OrderService;
 import com.salesagents.business.agent.services.AgentLoginService;
 import com.salesagents.business.agent.services.ViewCatalogService;
+import com.salesagents.domain.models.Agent;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +15,7 @@ import javafx.stage.Stage;
 public class AgentGuiFxApplication extends Application {
     private static AgentLoginService loginProxy;
     private static ViewCatalogService viewCatalogService;
+    private static OrderService orderService;
 
     public static void setLoginService(AgentLoginService loginService) {
         AgentGuiFxApplication.loginProxy = loginService;
@@ -20,6 +23,10 @@ public class AgentGuiFxApplication extends Application {
 
     public static void setViewCatalogService(ViewCatalogService viewCatalogService) {
         AgentGuiFxApplication.viewCatalogService = viewCatalogService;
+    }
+
+    public static void setOrderService(OrderService orderServiceProxy) {
+        AgentGuiFxApplication.orderService = orderServiceProxy;
     }
 
     @Override
@@ -50,6 +57,7 @@ public class AgentGuiFxApplication extends Application {
         mainPageController.setLoginService(loginProxy);
         mainPageController.setViewCatalogController(viewCatalogController);
         mainPageController.setViewCatalogService(viewCatalogService);
+        mainPageController.setOrderService(orderService);
 
         loginController.setMainPageController(mainPageController);
 

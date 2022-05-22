@@ -15,6 +15,8 @@
         <mapping class="com.salesagents.domain.models.Agent"/>
 
         <mapping class="com.salesagents.domain.models.Product"/>
+        <mapping class="com.salesagents.domain.models.Order"/>
+        <mapping class="com.salesagents.domain.models.OrderDetail"/>
 
     </session-factory>
 </hibernate-configuration>
