@@ -171,7 +171,7 @@ public class ViewCatalogController implements ProductObserver {
                 return;
             }
 
-            if (selectedQuantity >  selectedProduct.getQuantityInStock()) {
+            if (selectedQuantity >  selectedProduct.getQuantityInStock() || selectedQuantity <= 0) {
                 showExceptionMessageBox(new ExceptionBaseClass("Invalid quantity"));
                 return;
             }
@@ -197,6 +197,12 @@ public class ViewCatalogController implements ProductObserver {
             showExceptionMessageBox(new ExceptionBaseClass("Invalid client name"));
             return;
         }
+
+        if (currentOrder.getOrderDetailSet().size() == 0) {
+            showExceptionMessageBox(new ExceptionBaseClass("Order must have at least one product!"));
+            return;
+        }
+
         currentOrder.setPlacingDate(LocalDateTime.now());
         currentOrder.setClientName(clientName);
         currentOrder.setAgent(loggedAgent);
